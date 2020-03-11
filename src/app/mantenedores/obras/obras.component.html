@@ -1,0 +1,135 @@
+<div class="row encabezado animated fadeIn fast" style=margin:0>
+
+    <div class="col-12 col-md-4">
+        <h1>Obras</h1>
+    </div>
+
+    <div class="col-12 col-md-6 form_izq pt-2">
+        <input type="text" class="form-control " name="searchString " placeholder="Buscador... " [(ngModel)]="searchString " />
+    </div>
+    <div class="col-12 col-md-2 pt-2">
+        <button class="btn btn-outline-light animated jackInTheBox" data-toggle="modal" data-target="#nuevaObra">Crear Nueva Obra</button>
+    </div>
+</div>
+
+<div class="row animated fadeIn fast">
+    <div class="tabla col-12">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre </th>
+                        <th scope="col">Responsable </th>
+                        <th scope="col">Fecha Inicio</th>
+                        <th scope="col">Ciudad</th>
+                        <th scope="col">Comuna</th>
+                        <th scope="col">Estado</th>
+                    </tr>
+                </thead>
+                <tbody class="f_blanco">
+                    <tr *ngFor="let obra of obras | filter : { 'OBRANAME' : searchString, 'CODIGO' : searchString, 'FECHAINI' : searchString, 'RESPONSABLE' : searchString, 'ESTADO' : searchString, 'REGION' : searchString, 'CIUDAD' : searchString, 'COMUNA' : searchString } ; index as i"
+                        (click)="abrir(obra)" class="pointer">
+                        <td>{{i + 1}}</td>
+                        <td>{{obra.CODIGO}}</td>
+                        <td>{{obra.OBRANAME | titlecase}}</td>
+                        <td>{{obra.RESPONSABLE}}</td>
+                        <td>{{obra.FECHAINI}}</td>
+                        <td>{{obra.CIUDAD | titlecase }}</td>
+                        <td>{{obra.COMUNa}}</td>
+                        <td>{{obra.ESTADO}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="nuevaObra" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Nueva Obra</h5>
+                <button type="button" #closebutton class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form (ngSubmit)="guardarObra( f )" #f="ngForm" class="row">
+
+                    <div class="col-12">
+                        <label for="codigo">Codigo</label>
+                        <input class="form-control" type="text" name="codigo" [(ngModel)]="obra.codigo" disabled minlength="5">
+                    </div>
+
+                    <div class="col-12 form-group">
+                        <label for="nombre">Nombre </label>
+                        <span *ngIf="f.submitted && f.controls['nombre'].errors" class="text-danger animated fadeIn"> Este campo obligatorio</span>
+                        <input class="form-control" type="text" name="nombre" [(ngModel)]="obra.obraname" required minlength="5" placeholder="Nombre de la obra">
+                    </div>
+
+                    <div class="col-12 form-group">
+                        <label for="fechaIni">Fecha Inicial</label>
+                        <span *ngIf="f.submitted && f.controls['fechaIni'].errors" class="text-danger animated fadeIn"> Este campo obligatorio</span>
+                        <input class="form-control" type="Date" name="fechaIni" [(ngModel)]="obra.fechaINI" required placeholder="Fecha de inicio">
+                    </div>
+
+                    <div class="col-12 form-group">
+                        <label for="responsable">Responsable</label>
+                        <select class="form-control" name="responsable" [(ngModel)]="obra.responsable">
+                            <option *ngFor="let capataz of capataces" [(ngValue)]="capataz.RUT">{{capataz.NOMBRE | titlecase}} {{capataz.APELLIDO | titlecase}}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 form-group">
+                        <label for="region">Region</label>
+                        <select class="form-control" required name="region" [(ngModel)]="obra.region" (change)="filtrarComunas($event.target.value)">
+                            <option *ngFor="let region of regionesAll"  >{{region.region}}</option>
+                        </select>
+                    </div>
+
+                    <div *ngIf="mostrarComunas" class="col-12 form-group animated fadeIn">
+                        <label for="comuna">Comuna</label>
+                        <select class="form-control" required name="comuna" [(ngModel)]="obra.comuna">
+                            <option *ngFor="let comuna of comunas" >{{comuna | titlecase}}</option>
+                        </select>
+                    </div>
+                    <!-- 
+                    <div *ngIf="mostrarComunas" class="col-12 form-group animated fadeIn">
+                        <label for="ciudad">Ciudad </label>
+                        <span *ngIf="f.submitted && f.controls['ciudad'].errors" class="text-danger animated fadeIn"> Este campo obligatorio</span>
+                        <input class="form-control" type="text" name="ciudad" [(ngModel)]="obra.obraname" required minlength="5" placeholder="Nombre de la obra">
+                    </div> -->
+
+                    <div *ngIf="mostrarComunas" class="col-12 form-group animated fadeIn">
+                        <label for="direccion">Direccion </label>
+                        <input class="form-control" type="text" name="direccion" [(ngModel)]="obra.direccion" required minlength="5" placeholder="Direccion de la obra">
+                    </div>
+
+                    <div *ngIf="mostrarComunas" class="col-12 form-group animated fadeIn">
+                        <label for="estado">Estado</label>
+                        <select class="form-control" required name="estado" [(ngModel)]="obra.estado">
+                            <option>Nueva</option>
+                            <option>Programada</option>
+                            <option>En proceso</option>
+                            <option>Detenida</option>
+                            <option>Finalizada</option>
+                        </select>
+                    </div>
+
+                    <hr>
+
+                    <div class="col-12 mt-2">
+                        <button type="submit" class=" btn btn-primary btn-block">Guardar </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

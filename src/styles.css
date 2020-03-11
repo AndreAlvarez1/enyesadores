@@ -1,1 +1,37 @@
 /* You can add global styles to this file, and also import other style files */
+
+* {
+    font-family: 'Titillium Web', sans-serif;
+}
+
+body {
+    background-image: url('src/assets/images/fondo.jpg');
+}
+
+.f_azul {
+    background-color: #002157;
+}
+
+.f_blanco {
+    background-color: white;
+}
+
+.encabezado {
+    background-color: #002157;
+    color: white;
+    padding: 20px;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.contenedor {
+    margin: 0 0 0 0;
+}
+
+@media (min-width: 800px) {
+    .contenedor {
+        margin: 0 0 0 200px;
+    }
+}

@@ -1,0 +1,14 @@
+.modal-dialog {
+    margin-right: 0;
+    margin-top: 0;
+}
+
+.modal-header {
+    background-color: brown;
+    color: white;
+}
+
+.modal-header h1 {
+    font-size: 2em;
+    font-weight: 700;
+}
