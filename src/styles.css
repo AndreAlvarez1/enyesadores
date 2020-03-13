@@ -12,14 +12,42 @@ body {
     background-color: #002157;
 }
 
+.f_rojo {
+    background-color: #931116;
+}
+
+.f_naranjo {
+    background-color: #F71D25;
+}
+
+.f_celeste {
+    background-color: #6F94FE;
+}
+
+.f_verde {
+    background-color: #64CF45;
+}
+
 .f_blanco {
     background-color: white;
+}
+
+.f_gris {
+    background-color: #F5F6FA;
 }
 
 .encabezado {
     background-color: #002157;
     color: white;
     padding: 20px;
+}
+
+.encabezado h1 {
+    margin-bottom: 0;
+}
+
+.encabezado span {
+    font-weight: 700;
 }
 
 .pointer {
@@ -30,8 +58,33 @@ body {
     margin: 0 0 0 0;
 }
 
+.fondoModif {
+    background-color: rgba(0, 5, 46, 0.6);
+    position: fixed;
+    top: 0;
+    z-index: 1050;
+    height: 100vh;
+    width: 100%;
+    margin-left: 0;
+}
+
+.formulario {
+    height: auto;
+    padding: 20px;
+}
+
+.buscador {
+    padding: 10px;
+}
+
 @media (min-width: 800px) {
     .contenedor {
         margin: 0 0 0 200px;
+    }
+    .fondoModif {
+        width: calc( 100% - 200px);
+    }
+    .formulario {
+        height: 100vh;
     }
 }

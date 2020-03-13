@@ -1,14 +1,14 @@
 export class ObraModel {
-    codigo: string;
-    obraname: string;
-    descripcion: string;
-    fechaINI: Date;
-    fechaFIN: Date;
-    estado: string;
-    responsable: string;
-    ciudad: string;
-    region: string;
-    comuna: string;
-    direccion: string;
+    CODIGO: string;
+    OBRANAME: string;
+    DESCRIPCION: string;
+    FECHAINI: Date;
+    FECHAFIN: Date;
+    ESTADO: string;
+    RESPONSABLE: string;
+    CIUDAD: string;
+    REGION: string;
+    COMUNA: string;
+    DIRECCION: string;
     constructor() {}
 }

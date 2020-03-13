@@ -1,0 +1,70 @@
+<div class="row encabezado animated fadeIn fast" style=margin:0>
+
+    <div class="col-12 col-md-4">
+        <h1>Operario</h1>
+    </div>
+
+    <div class="col-12 col-md-2 offset-md-6 pt-2">
+        <button class="btn btn-outline-warning" routerLink="/operarios">Volver</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 col-md-6 f_gris formulario">
+        <form (ngSubmit)="guardarOperario( f )" #f="ngForm" class="row">
+
+            <div *ngIf="nuevo" class="col-12">
+                <label for="codigo">Rut</label>
+                <span *ngIf="f.submitted && f.controls['rut'].errors" class="text-danger animated fadeIn"> Este campo obligatorio</span>
+                <input class="form-control" type="text" name="rut" [(ngModel)]="operario.RUT" minlength="11" placeholder="99.999.999-9">
+            </div>
+
+            <div *ngIf="!nuevo" class="col-12">
+                <label for="codigo">Rut</label>
+                <input class="form-control" type="text" name="rut" [(ngModel)]="operario.RUT" minlength="11" disabled>
+            </div>
+
+            <div class="col-12 form-group">
+                <label for="nombre">Nombre </label>
+                <span *ngIf="f.submitted && f.controls['nombre'].errors" class="text-danger animated fadeIn"> Este campo obligatorio</span>
+                <input class="form-control" type="text" name="nombre" [(ngModel)]="operario.NOMBRE" required minlength="5" placeholder="Nombre del operario">
+            </div>
+            <div class="col-12 form-group">
+                <label for="paterno">Apelledo Paterno </label>
+                <span *ngIf="f.submitted && f.controls['paterno'].errors" class="text-danger animated fadeIn"> Este campo obligatorio</span>
+                <input class="form-control" type="text" name="paterno" [(ngModel)]="operario.APELLIDO" required minlength="5" placeholder="Apellido Paterno">
+            </div>
+
+            <div class="col-12 form-group">
+                <label for="materno">Apellido Materno </label>
+                <span *ngIf="f.submitted && f.controls['materno'].errors" class="text-danger animated fadeIn"> Este campo obligatorio</span>
+                <input class="form-control" type="text" name="materno" [(ngModel)]="operario.APELLIDOMAT" required minlength="5" placeholder="Apellido Materno">
+            </div>
+
+            <div class="col-12 form-group">
+                <label for="cel">Celular </label>
+                <span *ngIf="f.submitted && f.controls['cel'].errors" class="text-danger animated fadeIn"> Este campo obligatorio</span>
+                <input class="form-control" type="text" name="cel" [(ngModel)]="operario.CEL" required minlength="5" placeholder="+569 XXXX XXXX">
+            </div>
+
+            <div class="col-12 form-group animated fadeIn">
+                <label for="tipo">Cargo</label>
+                <select class="form-control" required name="tipo" [(ngModel)]="operario.TIPO">
+              <option>OPERARIO</option>
+              <option>CAPATAZ</option>
+           </select>
+            </div>
+
+
+            <hr>
+
+            <div class="col-12 mt-2">
+                <button type="submit" class=" btn btn-primary btn-block">Guardar </button>
+            </div>
+        </form>
+
+        <div *ngIf="!nuevo" class="col-12 text-center">
+            <button class="btn btn-danger mt-2" (click)="alertaBorrar()">Borrar Operario</button>
+        </div>
+    </div>
+</div>

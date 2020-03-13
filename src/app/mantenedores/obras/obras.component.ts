@@ -9,8 +9,6 @@ import regiones from 'src/assets/js/regiones.json';
 import Swal from 'sweetalert2';
 
 
-
-
 @Component({
   selector: 'app-obras',
   templateUrl: './obras.component.html',
@@ -26,6 +24,7 @@ export class ObrasComponent implements OnInit {
   comunas: any[] = [];
   siguienteCodigo = '';
   mostrarComunas = false;
+  edito: boolean;
 
   constructor(private conex: ConectorService,
               private router: Router) {
@@ -44,13 +43,18 @@ export class ObrasComponent implements OnInit {
     this.traerCapataces();
   }
 
+  nuevo() {
+    this.edito = false;
+    this.obra = new ObraModel();
+    this.obra.CODIGO = this.nuevoCodigo();
+  }
+
   traerObras() {
-    this.conex.traeDatos('/obras')
+    this.conex.traeDatos('/tablas/OBRAS')
         .subscribe(resp => {
           console.log(resp);
           this.obras = resp['datos'];
-          this.obra.codigo = this.nuevoCodigo();
-
+          this.obra.CODIGO = this.nuevoCodigo();
         });
   }
 
@@ -65,18 +69,23 @@ export class ObrasComponent implements OnInit {
       return; }
 
     // Limpio de apostrofes los campos
-    this.obra.obraname = this.obra.obraname.replace(/'/g, '');
-    this.obra.direccion = this.obra.direccion.replace(/'/g, '');
-    console.log(this.obra);
+    this.obra.OBRANAME = this.obra.OBRANAME.replace(/'/g, '');
+    this.obra.DIRECCION = this.obra.DIRECCION.replace(/'/g, '');
 
-    this.conex.guardarDato('/obras', this.obra)
-        .subscribe(resp => {
-            console.log(resp);
-            this.cerrarModal();
-            this.router.navigateByUrl('/obra/' + this.obra.codigo);
-          });
-  }
+    let url = '/obras';
+    if (!this.edito) {
+      url = '/obras/insert';
+    } else {
+      url = '/obras/update';
+    }
 
+    this.conex.guardarDato(url, this.obra)
+    .subscribe(resp => {
+        this.cerrarModal();
+        this.exito();
+      });
+}
+  
 
   nuevoCodigo() {
     const ultimo = this.obras[this.obras.length - 1];
@@ -103,7 +112,7 @@ export class ObrasComponent implements OnInit {
   }
 
   traerCapataces() {
-    this.conex.traeDatos('/operarios')
+    this.conex.traeDatos('/tablas/OPERARIOS')
         .subscribe( data => {
           const operarios = data["datos"]
           this.capataces = operarios.filter( operario => operario.TIPO === 'CAPATAZ' && operario.ESTADO === 1 )
@@ -118,6 +127,12 @@ export class ObrasComponent implements OnInit {
   }
 
 
+  editarObra(obra) {
+    console.log('obra', obra);
+    this.edito = true;
+    this.obra = obra;
+
+    }
 
 // Warnings
 errorIncompleto() {
@@ -127,6 +142,15 @@ errorIncompleto() {
     icon: 'error',
     confirmButtonText: 'Ok'
   });
+}
+
+exito() {
+  Swal.fire({
+    title: 'Datos grabados con exito',
+    icon: 'success',
+    confirmButtonText: 'Ok'
+  });
+  this.traerObras();
 }
 
 }

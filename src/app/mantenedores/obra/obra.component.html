@@ -1,3 +1,118 @@
-<p>
-  obra works!
-</p>
+<div class="row encabezado animated fadeIn fast" style=margin:0>
+
+    <div class="col-12 col-md-6">
+        <h1>{{obra.OBRANAME | titlecase}}</h1>
+        <p><span>Responsable:</span> {{responsable.NOMBRE | titlecase}} {{responsable.APELLIDO | titlecase}} {{responsable.APELLIDOMAT | titlecase}}</p>
+    </div>
+
+    <div class="col-12 col-md-4 offset-md-2 text-rigth pt-2">
+        <button class="btn btn-outline-success mr-2" (click)="configurar = !configurar">Configurar</button>
+        <button class="btn btn-outline-warning" routerLink="/obras">Volver</button>
+    </div>
+</div>
+
+
+<div class="row f_blanco porconfig">
+    <div class="col-12 text-center">
+        <h1><i class="fas fa-tools"></i></h1>
+        <h1>Obra por configurar</h1>
+        <button class="btn btn-outline-success mr-2" (click)="configurar = !configurar">Configurar</button>
+    </div>
+</div>
+
+<!---------------------------------------------------------------------->
+<!---------------------------------------------------------------------->
+<!-------------------------------BOTONERA------------------------------->
+<!---------------------------------------------------------------------->
+<!---------------------------------------------------------------------->
+
+<div *ngIf="configurar" class="row fondoModif animated fadeIn">
+    <div class="col-10 offset-2 col-md-6 offset-md-6 config animated slideInRight" style="padding:0">
+
+        <div class="row headConfig f_rojo">
+            <div class="col-6 col-md-8">
+                <h1>Configuraciones</h1>
+            </div>
+            <div class="col-5 col-md-4 text-right pointer" (click)="configurar = !configurar">
+                <h1><i class="fas fa-times"></i></h1>
+            </div>
+        </div>
+
+
+        <div class="row seccion pointer pt-4" (click)="irMantenedor('inmuebles')">
+            <div class="col-3 d-flex justify-content-center ">
+                <div class="icono f_rojo">
+                    <i class="fas fa-building fa-2x"></i>
+                </div>
+            </div>
+            <div class="col-9">
+                <h1>Inmuebles</h1>
+                <p>Configurar</p>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row seccion pointer pt-4" (click)="irMantenedor('niveles')">
+            <div class="col-3 d-flex justify-content-center ">
+                <div class="icono f_naranjo">
+                    <i class="fas fa-list-ol fa-2x"></i>
+                </div>
+            </div>
+            <div class="col-9">
+                <h1>Niveles</h1>
+                <p>Configurar</p>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row seccion pointer pt-4" (click)="irMantenedor('unidades')">
+            <div class="col-3 d-flex justify-content-center ">
+                <div class="icono f_celeste">
+                    <i class="fas fa-key fa-2x"></i>
+                </div>
+            </div>
+            <div class="col-9">
+                <h1>Unidades de Control</h1>
+                <p>Configurar</p>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row seccion pointer pt-4" (click)="irMantenedor('excel')">
+            <div class="col-3 d-flex justify-content-center ">
+                <div class="icono f_verde">
+                    <i class="fas fa-building fa-2x"></i>
+                </div>
+            </div>
+            <div class="col-9">
+                <h1>Importar Excel</h1>
+                <p>descargar ejemplo</p>
+            </div>
+        </div>
+
+        <hr>
+
+
+        <div class="row seccion pointer pt-4" (click)="editarObra()">
+            <div class="col-3 d-flex justify-content-center ">
+                <div class="icono f_azul">
+                    <i class="fas fa-building fa-2x"></i>
+                </div>
+            </div>
+            <div class="col-9">
+                <h1>Editar Obra</h1>
+                <p>Configurar</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!---------------------------------------------------------------------->
+<!---------------------------------------------------------------------->
+<!---------------------------FIN BOTONERA------------------------------->
+<!---------------------------------------------------------------------->
+<!---------------------------------------------------------------------->

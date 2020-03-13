@@ -1,0 +1,56 @@
+.config {
+    background-color: white;
+    padding: 20px;
+}
+
+.config h1 {
+    font-size: 1.5em;
+}
+
+.rojo {
+    color: red;
+}
+
+.porconfig {
+    padding-top: 80px;
+    min-height: 400px;
+}
+
+.headConfig {
+    padding: 20px;
+    color: white;
+}
+
+.seccion h1 {
+    font-size: 1.3em;
+    margin: 0;
+}
+
+.icono {
+    height: 40px;
+    width: 40px;
+    border-radius: 40px;
+    color: white;
+    text-align: center;
+    padding-top: 10px;
+}
+
+@media (min-width: 768px) {
+    .seccion h1 {
+        font-size: 2em;
+        margin: 0;
+    }
+    .icono {
+        height: 80px;
+        width: 80px;
+        border-radius: 80px;
+        padding-top: 25px;
+    }
+    .config h1 {
+        font-size: 2em;
+    }
+}
+
+@media (min-width: 992px) {}
+
+@media (min-width: 1200px) {}

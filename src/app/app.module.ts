@@ -17,6 +17,11 @@ import { HomeComponent } from './components/home/home.component';
 import { MenuComponent } from './shared/menu/menu.component';
 import { ObrasComponent } from './mantenedores/obras/obras.component';
 import { ObraComponent } from './mantenedores/obra/obra.component';
+import { OperariosComponent } from './mantenedores/operarios/operarios.component';
+import { OperarioComponent } from './mantenedores/operario/operario.component';
+import { InmueblesComponent } from './mantenedores/inmuebles/inmuebles.component';
+import { NivelesComponent } from './mantenedores/niveles/niveles.component';
+import { UnidadesComponent } from './mantenedores/unidades/unidades.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +31,12 @@ import { ObraComponent } from './mantenedores/obra/obra.component';
     MenuComponent,
     ObrasComponent,
     ObraComponent,
-    FilterPipe
+    FilterPipe,
+    OperariosComponent,
+    OperarioComponent,
+    InmueblesComponent,
+    NivelesComponent,
+    UnidadesComponent
   ],
   imports: [
     BrowserModule,
