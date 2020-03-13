@@ -1,3 +1,111 @@
-<p>
-  unidades works!
-</p>
+<div class="row encabezado animated fadeIn fast" style=margin:0>
+
+    <div class="col-12 col-md-6">
+        <h1>Configuración</h1>
+        <h3>Unidades de Control</h3>
+    </div>
+
+    <div class="col-12 col-md-2 offset-md-4 text-rigth pt-4">
+        <button class="btn btn-outline-warning" (click)="volver()">Volver</button>
+    </div>
+</div>
+
+<div class="row ml-0">
+
+
+    <div class="col-4 formulario f_gris">
+
+        <form (ngSubmit)="guardarU( f )" #f="ngForm" class="row">
+
+            <div class="col-8">
+                <label for="obra">Obra</label>
+                <input class="form-control" type="text" name="obra" [(ngModel)]="obra.OBRANAME" disabled>
+            </div>
+
+            <div class="col-4">
+                <label for="idobra">Codigo Obra</label>
+                <input class="form-control" type="text" name="idobra" [(ngModel)]="unidad.IDOBRA" disabled>
+            </div>
+
+            <div class="col-12 form-group animated fadeIn">
+                <label for="inmueble">Inmueble</label>
+                <select class="form-control" required name="inmueble" [(ngModel)]="unidad.IDINMUEBLE" (change)="filtrarUnidadesI($event.target.value)">
+                  <option>Todos</option>
+                  <option *ngFor="let inmueble of inmuebles" [(ngValue)]="inmueble.CODIGO" >{{inmueble.INAME | titlecase}}</option>
+              </select>
+            </div>
+            <!-- [(ngValue)]="inmueble.CODIGO" -->
+
+            <div class="col-12 form-group animated fadeIn">
+                <label for="nivel">Nivel</label>
+                <select class="form-control" required name="nivel" [(ngModel)]="unidad.IDNIVEL" (change)="filtrarUnidadesN($event.target.value)">
+                  <option>Todos</option>
+                  <option *ngFor="let nivel of niveles"[(ngValue)]="nivel.CODIGO" >{{nivel.NNAME | titlecase}}</option>
+              </select>
+            </div>
+
+
+            <div class="col-12 form-group">
+                <label for="codigo">Codigo unidad</label>
+                <input class="form-control" type="text" name="codigo" [(ngModel)]="unidad.CODIGO" required minlength="6" disabled>
+            </div>
+
+            <div class="col-12 form-group">
+                <label for="uname">Nombre </label>
+                <span *ngIf="f.submitted && f.controls['uname'].errors" class="text-danger animated fadeIn"> Este campo obligatorio</span>
+                <input class="form-control" type="text" name="uname" [(ngModel)]="unidad.UNAME" required minlength="4" placeholder="Nombre de la Unidad de control">
+            </div>
+
+
+            <hr>
+
+            <div class="col-12 mt-2">
+                <button type="submit" class=" btn btn-primary btn-block">Guardar </button>
+            </div>
+        </form>
+
+    </div>
+
+
+    <div class="col-8 f_blanco  pl-0">
+
+        <div class="row buscador">
+            <div class="col-1 text-center">
+                <i class="fas fa-search fa-2x mt-1 text-primary"></i>
+            </div>
+            <div class="col-11">
+                <input class="form-control" type="text" class="form-control " name="searchString " placeholder="Buscador... " [(ngModel)]="searchString " />
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Codigo</th>
+                        <th scope="col">Nombre </th>
+                        <th scope="col">Inmueble </th>
+                        <th scope="col">Nivel </th>
+                        <th scope="col">Tipo </th>
+                        <th scope="col">Accion </th>
+                    </tr>
+                </thead>
+                <tbody class="f_blanco">
+                    <tr *ngFor="let unidad of unidades | filter : { 'CODIGO' : searchString, 'UNAME' : searchString, 'INAME' : searchString, 'NNAME' : searchString, 'TIPO' : searchString}; index as i" class="pointer">
+                        <td>{{i + 1}}</td>
+                        <td>{{unidad.CODIGO}}</td>
+                        <td>{{unidad.UNAME | titlecase}}</td>
+                        <td>{{unidad.INAME | titlecase}}</td>
+                        <td>{{unidad.NNAME | titlecase}}</td>
+                        <td>{{unidad.TIPO | titlecase}}</td>
+                        <td><i (click)="editar(unidad)" class="fas fa-pen "></i>
+                            <i (click)="ir(unidad)" class="fas fa-arrow-right ml-4"></i>
+                            <i (click)="alertaBorrar(unidad)" class="far fa-trash-alt ml-4"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

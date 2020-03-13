@@ -104,6 +104,8 @@ export class ObrasComponent implements OnInit {
     return nextCodigo;
   }
 
+  
+
   filtrarComunas(regionSelect) {
     this.mostrarComunas = true;
     const filtrado = regiones.filter( resp => resp.region === regionSelect );

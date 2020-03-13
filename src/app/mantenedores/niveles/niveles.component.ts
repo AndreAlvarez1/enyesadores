@@ -101,11 +101,11 @@ filtrarNiveles(valor) {
   }
 
   ir(i) {
-    this.router.navigateByUrl(`/unidades/${this.obraId}/${i.IDINMUEBLE}/${i.CODIGO}`);
+    this.router.navigateByUrl(`/unidades/${this.obraId}/${i.CODIGO}`);
   }
 
   volver() {
-      if (this.inmuebleId !== 'todos') {
+      if (this.inmuebleId !== 'Todos') {
         this.router.navigateByUrl(`/inmuebles/${this.obraId}`);
       } else {
         this.router.navigateByUrl(`/obra/${this.obraId}`);
@@ -150,27 +150,23 @@ filtrarNiveles(valor) {
   }
 
   nuevoCodigo() {
+    this.conex.traeDatos('/codigo/NIVELES')
+        .subscribe( resp => {
+                let nextCodigo =  resp['datos'];
 
-    this.conex.traeDatos('/tablas/NIVELES').subscribe( resp => {
-      const todos = resp['datos']
+                const numero = (Number(nextCodigo.slice(1, 5)) + 1).toString();
 
-      const ultimo = todos[todos.length - 1];
-      let nextCodigo = ultimo.CODIGO;
-
-      const numero = (Number(nextCodigo.slice(1, 5)) + 1).toString();
-      console.log(numero);
-
-      if (numero.length === 1 ) {
-        nextCodigo  = 'N000' + numero;
-      } else if (numero.length === 2) {
-        nextCodigo = 'N00' + numero;
-      } else if (numero.length === 3) {
-        nextCodigo = 'N0' + numero;
-      } else {
-        nextCodigo = 'N' + numero;
-      }
-      this.nivel.CODIGO = nextCodigo;
-  });
+                if (numero.length === 1 ) {
+                nextCodigo  = 'N000' + numero;
+              } else if (numero.length === 2) {
+                nextCodigo = 'N00' + numero;
+              } else if (numero.length === 3) {
+                nextCodigo = 'N0' + numero;
+              } else {
+                nextCodigo = 'N' + numero;
+              }
+                this.nivel.CODIGO = nextCodigo;
+        });
 }
 
 borrar(i) {

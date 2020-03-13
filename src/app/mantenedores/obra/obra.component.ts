@@ -63,7 +63,7 @@ export class ObraComponent implements OnInit {
         ruta = `/niveles/${this.id}/Todos`;
         break;
       case 'unidades':
-        ruta = `/unidades/${this.id}/todos/todos`;
+        ruta = `/unidades/${this.id}/Todos`;
         break;
       case 'excel':
         ruta = `/importar/${this.id}`;

@@ -8,6 +8,7 @@ import { OperariosComponent } from './mantenedores/operarios/operarios.component
 import { OperarioComponent } from './mantenedores/operario/operario.component';
 import { InmueblesComponent } from './mantenedores/inmuebles/inmuebles.component';
 import { NivelesComponent } from './mantenedores/niveles/niveles.component';
+import { UnidadesComponent } from './mantenedores/unidades/unidades.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -18,7 +19,7 @@ const routes: Routes = [
   {path: 'operario/:id', component: OperarioComponent},
   {path: 'inmuebles/:obra', component: InmueblesComponent},
   {path: 'niveles/:obra/:inmueble', component: NivelesComponent},
-  {path: 'unidades/:obra/:nivel', component: NivelesComponent},
+  {path: 'unidades/:obra/:nivel', component: UnidadesComponent},
   {path: '', pathMatch: 'full', redirectTo: 'login'},
   {path: '**', pathMatch: 'full', redirectTo: 'login'}
 ];
