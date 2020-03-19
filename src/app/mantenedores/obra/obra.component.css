@@ -1,3 +1,8 @@
+.loading {
+    height: 100vh;
+    padding: 80px;
+}
+
 .config {
     background-color: white;
     padding: 20px;
@@ -27,12 +32,50 @@
 }
 
 .icono {
-    height: 40px;
-    width: 40px;
-    border-radius: 40px;
+    height: 80px;
+    width: 80px;
+    border-radius: 80px;
+    padding-top: 25px;
     color: white;
     text-align: center;
-    padding-top: 10px;
+}
+
+.cifras {
+    padding: 40px 20px 20px;
+    color: #002157;
+    margin: 0;
+    border-bottom: 3px solid #931116;
+}
+
+.cifra {
+    margin-bottom: 20px;
+}
+
+.cifras h1 {
+    font-size: 4em;
+    font-weight: 700;
+    margin: -10px;
+}
+
+.cifras p {
+    margin: 0;
+}
+
+.filtros {
+    padding: 20px;
+    border-bottom: 3px solid #931116;
+}
+
+.filtro {
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.resultados {
+    padding: 20px 0;
+    min-height: 50vh;
 }
 
 @media (min-width: 768px) {

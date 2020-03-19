@@ -1,0 +1,79 @@
+<div class="row encabezado animated fadeIn fast" style=margin:0>
+
+    <div class="col-12 col-md-6">
+        <h1>Configuracion</h1>
+        <h3>Valores por operación</h3>
+    </div>
+
+    <div class="col-12 col-md-2 offset-md-4 text-rigth pt-4">
+        <button class="btn btn-outline-warning" (click)="volver()">Volver</button>
+    </div>
+</div>
+
+
+<div class="row ml-0">
+
+
+    <div class="col-4 formulario f_gris">
+        <form (ngSubmit)="guardar( f )" #f="ngForm" class="row">
+
+            <div class="col-12 form-group animated fadeIn">
+                <label for="operacion">Operación</label>
+                <select class="form-control" required name="operacion" [(ngModel)]="precio.IDOPERACION">
+                <option *ngFor="let operacion of operaciones"[(ngValue)]="operacion.ID" >{{operacion.NOMBRE | titlecase}} - ({{operacion.UNIDAD | titlecase}})</option>
+            </select>
+            </div>
+
+            <div class="col-12 form-group">
+                <label for="precio">Precio</label>
+                <span *ngIf="f.submitted && f.controls['precio'].errors" class="text-danger animated fadeIn"> Este campo obligatorio</span>
+                <input class="form-control" type="number" name="precio" [(ngModel)]="precio.PRECIO" required minlength="1" placeholder="Valor de la operación">
+            </div>
+            <hr>
+
+            <div class="col-12 mt-2">
+                <button type="submit" class=" btn btn-primary btn-block">Guardar </button>
+            </div>
+        </form>
+
+    </div>
+
+
+    <div class="col-8 f_blanco  pl-0">
+
+        <div class="row buscador">
+            <div class="col-1 text-center">
+                <i class="fas fa-search fa-2x mt-1 text-primary"></i>
+            </div>
+            <div class="col-11">
+                <input class="form-control" type="text" class="form-control " name="searchString " placeholder="Buscador... " [(ngModel)]="searchString " />
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">ID Operacion</th>
+                        <th scope="col">Operacion</th>
+                        <th scope="col">Unidad de Medida</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Editar</th>
+                    </tr>
+                </thead>
+                <tbody class="f_blanco">
+                    <tr *ngFor="let precio of precios | filter : { 'OPERACIONID' : searchString, 'NOMBRE' : searchString, 'UNIDAD' : searchString, 'PRECIO' : searchString}; index as i" class="pointer">
+                        <td>{{i + 1}}</td>
+                        <td>{{precio.OPERACIONID}}</td>
+                        <td>{{precio.NOMBRE | titlecase}}</td>
+                        <td>{{precio.UNIDAD }}</td>
+                        <td>${{precio.PRECIO }}</td>
+                        <td><i (click)="editar(precio)" class="fas fa-pen "></i>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,60 @@
+.encabezado p {
+    margin: 0;
+}
+
+.encabezado h1 {
+    font-size: 3em;
+    font-weight: 700;
+    margin-top: -5px;
+    margin-bottom: -5px;
+}
+
+.registro {
+    color: white;
+}
+
+.operarios h1,
+.registro h1 {
+    font-size: 3em;
+    font-weight: 700;
+    margin-top: 40px;
+    line-height: 36px;
+}
+
+.registro,
+.operarios {
+    padding: 0 20px 30px;
+    max-height: 50vh;
+    overflow: auto;
+}
+
+.registro p {
+    margin: 0;
+}
+
+.registro span {
+    font-weight: 700;
+}
+
+.headRegistro {
+    border-bottom: 1px solid white;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.cuadrilla {
+    padding: 20px 0;
+    border-bottom: 1px solid white;
+}
+
+.cuadrilla p {
+    margin: 0;
+    font-size: 1.1em;
+}
+
+@media (min-width: 800px) {
+    .registro,
+    .operarios {
+        max-height: 100vh;
+    }
+}

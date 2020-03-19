@@ -22,6 +22,9 @@ import { OperarioComponent } from './mantenedores/operario/operario.component';
 import { InmueblesComponent } from './mantenedores/inmuebles/inmuebles.component';
 import { NivelesComponent } from './mantenedores/niveles/niveles.component';
 import { UnidadesComponent } from './mantenedores/unidades/unidades.component';
+import { UnidadComponent } from './mantenedores/unidad/unidad.component';
+import { RegistroComponent } from './mantenedores/registro/registro.component';
+import { PreciosComponent } from './mantenedores/precios/precios.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,10 @@ import { UnidadesComponent } from './mantenedores/unidades/unidades.component';
     OperarioComponent,
     InmueblesComponent,
     NivelesComponent,
-    UnidadesComponent
+    UnidadesComponent,
+    UnidadComponent,
+    RegistroComponent,
+    PreciosComponent
   ],
   imports: [
     BrowserModule,

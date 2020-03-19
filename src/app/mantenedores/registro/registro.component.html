@@ -1,0 +1,158 @@
+<div class="row encabezado animated fadeIn fast" style=margin:0>
+
+    <div class="col-12 col-md-6">
+        <p>{{unidad.INAME}} > {{unidad.NNAME}} > </p>
+        <h1>{{unidad.UNAME}}</h1>
+        <p>Tipo: {{unidad.TIPO}}</p>
+    </div>
+
+    <div class="col-12 col-md-2 offset-md-4 text-rigth pt-4">
+        <button class="btn btn-outline-warning" (click)="volver()">Volver</button>
+    </div>
+</div>
+
+
+
+
+<div class="row">
+    <div class="col-12">
+
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Operacion</th>
+                        <th scope="col">Progreso </th>
+                        <th scope="col">Meta</th>
+                        <th scope="col">%</th>
+                        <th scope="col">Creado </th>
+                        <th scope="col">Último registro </th>
+                        <th scope="col">Revisor </th>
+                        <th scope="col">Completado </th>
+                    </tr>
+                </thead>
+                <tbody class="f_blanco">
+                    <tr *ngFor="let pega of pegas; index as i" class="pointer" (click)="selectPega(pega)">
+                        <td>{{i + 1}}</td>
+                        <td>{{pega.OPERACION | titlecase}} ( {{pega.UNIDAD | titlecase}} )</td>
+                        <td>{{pega.PROGRESO }}</td>
+                        <td>{{pega.META }}</td>
+                        <td>{{pega.PROGRESO * 100 / pega.META | number:'1.1-1'}}%</td>
+                        <td>{{pega.CREADO | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{pega.ACTUALIZADO | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{pega.NOMBRE | titlecase}} {{pega.APELLIDO | titlecase}} </td>
+                        <td *ngIf=" pega.COMPLETADO > 0 "><i class="fas fa-check text-success"></i></td>
+                        <td *ngIf=" pega.COMPLETADO < 1 "><i class="fas fa-paint-roller text-danger"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+</div>
+
+
+<!-- ================================================ -->
+<!-- ================================================ -->
+<!-- ================================================ -->
+<!-- ============= REGISTRAR AVANCE ================= -->
+<!-- ================================================ -->
+<!-- ================================================ -->
+<!-- ================================================ -->
+
+
+<div *ngIf="ingresarPega" class="row fondoModif">
+
+    <div class="col-12 col-lg-5 f_azul registro animated fadeInDown">
+
+        <div class="row headRegistro">
+            <div class="col-8">
+                <h1>Registrar <br> Avance</h1>
+                <p>Operación<span> {{operacion.OPERACION | titlecase}} </span></p>
+                <p>Cantidad Pendiente: <span>{{operacion.META - operacion.PROGRESO}} {{operacion.UNIDAD}}</span></p>
+            </div>
+
+            <div class="col-4 mt-5 text-right">
+                <button class="btn btn-outline-warning" (click)="ingresarPega = !ingresarPega">Volver</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 form-group">
+                <label for="cantidad">Cantidad avanzada</label>
+                <input class="form-control" type="number" name="cantidad" [(ngModel)]="cantidad" required minlength="1" placeholder="Escribe aqui la cantidad realizada">
+            </div>
+        </div>
+
+        <div *ngIf="cuadrilla.length < 1 " class="row">
+            <div class="col-12">
+                <button class="btn btn-warning btn-block" (click)="traerCuadrilla()">¿Traer última cuadrilla?</button>
+            </div>
+        </div>
+
+        <!--CUADRILLA-->
+        <div *ngFor="let persona of cuadrilla; index as i" class="row cuadrilla">
+            <div class="col-8 pt-1">
+                <p><i class="fas fa-times pointer" (click)="borrarOperario(persona, i)"></i> {{persona.nombre | titlecase}} {{persona.apellido | titlecase}} {{persona.apellidomat | titlecase}}</p>
+            </div>
+            <div class="input-group col-4">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">%</div>
+                </div>
+                <input type="number" class="form-control" [(ngModel)]="persona.porcentaje" placeholder="%">
+            </div>
+
+        </div>
+
+
+
+        <div class="col-12 mt-4">
+            <button class=" btn btn-primary btn-block" (click)="guardarAvance()">Guardar</button>
+        </div>
+    </div>
+    <!-- FIN COL IZQUIERDA -->
+
+
+
+
+
+    <!--OPERARIOS-->
+    <div class="col-12 col-lg-5 offset-lg-2 f_blanco operarios animated fadeInUp">
+        <h1>Seleccionar <br>Operario</h1>
+
+
+        <div class="row buscador">
+            <div class="col-1 text-center">
+                <i class="fas fa-search fa-2x mt-1 text-primary"></i>
+            </div>
+            <div class="col-11">
+                <input class="form-control" type="text" class="form-control " name="searchString " placeholder="Buscador... " [(ngModel)]="searchString " />
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Rut</th>
+                        <th scope="col">Nombre</th>
+                    </tr>
+                </thead>
+                <tbody class="f_blanco">
+                    <tr *ngFor="let operario of operarios | filter : { 'RUT' : searchString, 'NOMBRE' : searchString, 'APELLIDO' : searchString, 'APELLIDOMAT' : searchString}; index as i" class="pointer" (click)="escogerOperario(operario)">
+                        <td>{{i + 1}}</td>
+                        <td>{{operario.RUT }}</td>
+                        <td>{{operario.NOMBRE | titlecase}} {{operario.APELLIDO | titlecase}} {{operario.APELLIDMAT | titlecase}}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+</div>

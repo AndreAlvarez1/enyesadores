@@ -19,9 +19,10 @@ export class UnidadesComponent implements OnInit {
      inmueble: any[] = [];
 
      inmuebles: any[] = [];
-     nivelesALL: any[] = [];
+     nivelesAll: any[] = [];
      niveles: any[] = [];
      unidades: any[] = [];
+     unidadesAll: any[] = [];
 
 
 //   nivelesALL: any[] = [];
@@ -48,7 +49,7 @@ export class UnidadesComponent implements OnInit {
                 this.traerObra();
                 this.traerInmuebles();
                 this.traerUnidades(this.nivelId);
-                this.traerNiveles(this.nivelId);
+                this.traerNiveles();
 
                 this.unidad.IDOBRA = this.obraId;
 
@@ -66,18 +67,16 @@ export class UnidadesComponent implements OnInit {
 traerUnidades(filtro) {
   this.conex.traeDatos(`/unidades/${this.obraId}`)
             .subscribe( resp => {
-              const unidades = resp['datos'];
-
-              console.log('unidades', unidades);
+              this.unidadesAll = resp['datos'];
+              console.log(this.unidadesAll);
 
 
               if (filtro !== 'Todos') {
-                this.unidades = unidades.filter( u => u.IDNIVEL === filtro);
+                this.unidades = this.unidadesAll.filter( u => u.IDNIVEL === filtro);
               } else {
-                this.unidades = unidades;
+                this.unidades = this.unidadesAll;
               }
               this.nuevoCodigo();
-
             });
 }
 
@@ -86,7 +85,6 @@ traerObra() {
             .subscribe( resp => {
               const obraTemp = resp['datos'][0];
               this.obra = obraTemp;
-              console.log('obra', this.obra);
             });
 }
 
@@ -95,99 +93,67 @@ traerInmuebles() {
   this.conex.traeDatos(`/tablas/INMUEBLES`)
             .subscribe( resp => {
               this.inmuebles = resp['datos'].filter( i => i.IDOBRA === this.obraId && i.ESTADO === 1);
-              console.log(this.inmuebles);
             });
 }
 
-traerNiveles(filtro) {
+traerNiveles() {
   this.conex.traeDatos(`/tablas/NIVELES`)
             .subscribe( resp => {
-              this.nivelesALL = resp['datos'].filter( n => n.IDOBRA === this.obraId && n.ESTADO === 1);
-              this.niveles = this.nivelesALL;
-              console.log('todos los niveles de la obra', this.niveles);
-              this.camposXdefecto();
+              this.nivelesAll = resp['datos'].filter( n => n.IDOBRA === this.obraId && n.ESTADO === 1);
+              // this.camposXdefecto();
             });
 }
 
 
-camposXdefecto() {
-  if (this.nivelId !== 'Todos') {
-    const nivel = this.niveles.filter( nuevo => nuevo.CODIGO === this.nivelId );
-    console.log('nivel', nivel);
-    this.unidad.IDINMUEBLE = nivel[0].IDINMUEBLE;
-    this.unidad.IDNIVEL = this.nivelId;
-  }
+// camposXdefecto() {
+//   if (this.nivelId !== 'Todos') {
+//     const nivel = this.nivelesAll.filter( nuevo => nuevo.CODIGO === this.nivelId );
+//     this.unidad.IDINMUEBLE = nivel[0].IDINMUEBLE;
+//     this.unidad.IDNIVEL = this.nivelId;
+//   }
 
-}
+// }
 
 
 filtrarUnidadesI(valor) {
 
   let codigo = valor;
+  console.log('inmueble', valor);
 
   if (valor !== 'Todos' ) {
+    console.log('inmueble codigo', codigo);
+    this.inmuebleId = codigo;
     codigo = valor.substring(3, 8);
-    this.niveles = this.nivelesALL.filter( niv => niv.IDINMUEBLE === codigo);
+    this.niveles = this.nivelesAll.filter( niv => niv.IDINMUEBLE === codigo);
+    this.unidades = this.unidadesAll.filter( u => u.IDINMUEBLE === codigo);
+
   } else {
-    console.log('TODOS LOS Inmuebles')
-    this.niveles = this.nivelesALL;
+    this.inmuebleId = 'Todos';
+    this.niveles = this.nivelesAll;
+    this.unidades = this.unidadesAll;
   }
-
-  this.inmuebleId = codigo;
-
-  this.conex.traeDatos(`/unidades/${this.obraId}`)
-            .subscribe( resp => {
-              const unidades = resp['datos'];
-
-              console.log('unidades', unidades);
-              if (codigo !== 'Todos') {
-                this.unidades = unidades.filter( u => u.IDINMUEBLE === codigo);
-              } else {
-                this.unidades = unidades;
-              }
-            });
 }
-
-
 
 
 filtrarUnidadesN(valor) {
-
-  if (this.inmuebleId === 'Todos') {
-    if (valor === 'Todos') {
-      console.log('aca toodos');
-      this.traerUnidades(valor);
-    } else {
-      this.traerUnidades(valor.substring(3, 8));
-    }
+  if ( valor === 'Todos' && this.inmuebleId === 'Todos') {
+       this.unidades = this.unidadesAll;
+  } else if ( valor === 'Todos' && this.inmuebleId !== 'Todos') {
+    this.unidades = this.unidadesAll.filter( u => u.IDINMUEBLE === this.inmuebleId);
   } else {
-    if (valor === 'Todos') {
-      this.conex.traeDatos(`/unidades/${this.obraId}`)
-          .subscribe( resp => {
-            const unidades = resp['datos'];
-            this.unidades = unidades.filter( u => u.IDINMUEBLE === this.inmuebleId);
-          });
-    } else {
-      this.conex.traeDatos(`/unidades/${this.obraId}`)
-          .subscribe( resp => {
-            const unidades = resp['datos'];
-            this.unidades = unidades.filter( u => u.IDINMUEBLE === this.inmuebleId && u.IDNIVEL === valor.substring(3, 8));
-          });
-    }
+    this.unidades = this.unidadesAll.filter( u => u.IDNIVEL === valor.substring(3, 8));
   }
-
-  console.log(valor);
 }
 
 
-//   editar(i) {
-//     console.log(i);
-//     this.nivel = i;
-//   }
+  editar(i) {
+    console.log(i);
+    this.unidad = i;
+  }
 
-//   ir(i) {
-//     this.router.navigateByUrl(`/unidades/${this.obraId}/${i.IDINMUEBLE}/${i.CODIGO}`);
-//   }
+  ir(i) {
+    this.router.navigateByUrl(`/unidad/${this.obraId}/${i.CODIGO}`);
+  }
 
   volver() {
       if (this.nivelId !== 'Todos') {
@@ -202,30 +168,33 @@ filtrarUnidadesN(valor) {
       this.errorIncompleto();
       return; }
 
+    if (this.unidad.IDINMUEBLE === 'Todos' || this.unidad.IDNIVEL === 'Todos'){
+      this.error('La unidad debe pertenecer a un nivel o inmueble especificio. No puede escoger la alternativa Todos')
+      return;
+    }
+
+    //   Limpio de apostrofes los campos
+    this.unidad.UNAME = this.unidad.UNAME.replace(/'/g, '');
     console.log(this.unidad);
 
-    // Limpio de apostrofes los campos
-    // this.nivel.NNAME = this.nivel.NNAME.replace(/'/g, '');
-    // console.log(this.nivel);
-
-    // if (this.verificaCodigo()) {
-    //   this.conex.guardarDato('/niveles/insert', this.nivel)
-    //       .subscribe(resp => {
-    //           this.exito('Registro grabado con exito');
-    //           this.traerNiveles(this.nivel.IDINMUEBLE);
-    //         });
-    // } else {
-    //   this.conex.guardarDato('/niveles/update', this.nivel)
-    //             .subscribe(resp => {
-    //             this.exito('Registro grabado con exito');
-    //             this.traerNiveles(this.nivel.IDINMUEBLE);
-    //           });
-    // }
+    if (this.verificaCodigo()) {
+      this.conex.guardarDato('/unidades/insert', this.unidad)
+          .subscribe(resp => {
+              this.exito('Registro grabado con exito');
+              this.traerUnidades(this.unidad.IDNIVEL);
+            });
+    } else {
+      this.conex.guardarDato('/unidades/update', this.unidad)
+                .subscribe(resp => {
+                this.exito('Registro grabado con exito');
+                this.traerUnidades(this.unidad.IDNIVEL);
+              });
+    }
   }
 
 
   verificaCodigo() {
-    const buscar = this.unidades.filter( cod => cod.CODIGO === this.unidad.CODIGO);
+    const buscar = this.unidadesAll.filter( cod => cod.CODIGO === this.unidad.CODIGO);
     if (buscar.length < 1) {
       return true;
     } else {
@@ -256,12 +225,12 @@ nuevoCodigo() {
       });
 }
 
-// borrar(i) {
-//   i.ESTADO = 0;
-//   this.conex.guardarDato('/niveles/borrar', i).subscribe(resp => { console.log('borrado'); });
-//   this.exito('Registro borrado con exito');
-//   this.traerNiveles(i.IDINMUEBLE);
-// }
+borrar(i) {
+  i.ESTADO = 0;
+  this.conex.guardarDato('/unidades/borrar', i).subscribe(resp => { console.log('borrado'); });
+  this.exito('Registro borrado con exito');
+  this.traerUnidades(this.unidad.IDNIVEL);
+}
 
 
 // // // Warnings
@@ -269,6 +238,14 @@ errorIncompleto() {
   Swal.fire({
     title: 'Formulario incompleto!',
     text: 'Llena todos los campos por favor',
+    icon: 'error',
+    confirmButtonText: 'Ok'
+  });
+}
+
+error(mensaje) {
+  Swal.fire({
+    text: mensaje,
     icon: 'error',
     confirmButtonText: 'Ok'
   });
@@ -295,7 +272,7 @@ alertaBorrar(i) {
     cancelButtonText: 'No'
   }).then((result) => {
     if (result.value) {
-      // this.borrar(i);
+      this.borrar(i);
     } else {
       return;
     }

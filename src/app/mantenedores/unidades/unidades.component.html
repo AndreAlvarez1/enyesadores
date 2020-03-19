@@ -44,6 +44,14 @@
               </select>
             </div>
 
+            <div class="col-12 form-group animated fadeIn">
+                <label for="tipo">Tipo</label>
+                <select class="form-control" required name="tipo" [(ngModel)]="unidad.TIPO">
+                  <option>Departamento</option>
+                  <option>Escalera</option>
+              </select>
+            </div>
+
 
             <div class="col-12 form-group">
                 <label for="codigo">Codigo unidad</label>
@@ -53,7 +61,7 @@
             <div class="col-12 form-group">
                 <label for="uname">Nombre </label>
                 <span *ngIf="f.submitted && f.controls['uname'].errors" class="text-danger animated fadeIn"> Este campo obligatorio</span>
-                <input class="form-control" type="text" name="uname" [(ngModel)]="unidad.UNAME" required minlength="4" placeholder="Nombre de la Unidad de control">
+                <input class="form-control" type="text" name="uname" [(ngModel)]="unidad.UNAME" required minlength="2" placeholder="Nombre de la Unidad de control">
             </div>
 
 
