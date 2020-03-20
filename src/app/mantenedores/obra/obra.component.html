@@ -100,7 +100,7 @@
 
 
     <div class="col-10 offset-1 col-md-6 offset-md-3 filtro shadow">
-        <label>Imuebles</label>
+        <label>Niveles</label>
         <select class="form-control" (change)="filtrarUnidadesN($event.target.value)">
             <option>Todos</option>
             <option *ngFor="let nivel of niveles"[(ngValue)]="nivel.CODIGO" >{{nivel.CODIGO }} | {{nivel.NNAME | titlecase}}</option>

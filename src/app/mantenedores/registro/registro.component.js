@@ -23,6 +23,7 @@ var RegistroComponent = /** @class */ (function () {
         this.unidad = {};
         this.pegas = [];
         this.operarios = [];
+        this.historial = [];
         this.usuario = '16.655.789-5';
         this.cuadrilla = [];
         this.cantidad = 0;
@@ -33,6 +34,7 @@ var RegistroComponent = /** @class */ (function () {
         this.traerPegas();
         this.traerUnidad();
         this.traerOperarios();
+        this.traerHistorial();
         if (localStorage.getItem('cuadrilla')) {
             this.cuadrillaMemoria = true;
         }
@@ -58,6 +60,14 @@ var RegistroComponent = /** @class */ (function () {
     RegistroComponent.prototype.traerOperarios = function () {
         var _this = this;
         this.conex.traeDatos('/tablas/OPERARIOS').subscribe(function (resp) { _this.operarios = resp['datos']; console.log(_this.operarios); });
+    };
+    RegistroComponent.prototype.traerHistorial = function () {
+        var _this = this;
+        this.conex.traeDatos("/trabajosXUnidad/" + this.unidadId)
+            .subscribe(function (resp) {
+            _this.historial = resp['datos'];
+            console.log('historial', _this.historial);
+        });
     };
     RegistroComponent.prototype.selectPega = function (pega) {
         this.operacion = pega;

@@ -73,6 +73,7 @@ traerNiveles(filtro) {
   this.conex.traeDatos(`/niveles`)
             .subscribe( resp => {
               this.nivelesALL = resp['datos'].filter( i => i.IDOBRA === this.obraId);
+              console.log('nivelesAll', this.nivelesALL);
               this.niveles = this.nivelesALL;
 
               if ( filtro !== 'Todos') {
@@ -153,6 +154,7 @@ filtrarNiveles(valor) {
     this.conex.traeDatos('/codigo/NIVELES')
         .subscribe( resp => {
                 let nextCodigo =  resp['datos'];
+                console.log('next', nextCodigo);
 
                 const numero = (Number(nextCodigo.slice(1, 5)) + 1).toString();
 

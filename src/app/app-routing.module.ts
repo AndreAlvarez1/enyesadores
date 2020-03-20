@@ -12,6 +12,7 @@ import { UnidadesComponent } from './mantenedores/unidades/unidades.component';
 import { UnidadComponent } from './mantenedores/unidad/unidad.component';
 import { PreciosComponent } from './mantenedores/precios/precios.component';
 import { RegistroComponent } from './mantenedores/registro/registro.component';
+import { HistorialComponent } from './components/historial/historial.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -26,6 +27,8 @@ const routes: Routes = [
   {path: 'unidad/:obra/:unidad', component: UnidadComponent},
   {path: 'precios/:obra', component: PreciosComponent},
   {path: 'registro/:obra/:unidad', component: RegistroComponent},
+  {path: 'historial', component: HistorialComponent},
+
   {path: '', pathMatch: 'full', redirectTo: 'login'},
   {path: '**', pathMatch: 'full', redirectTo: 'login'}
 ];

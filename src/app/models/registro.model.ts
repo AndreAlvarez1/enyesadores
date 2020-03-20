@@ -7,9 +7,30 @@ export class RegistroModel {
     PRECIO: number;
     TOTAL: number;
     REVISOR: string;
-    FECHA: Date;
+    FECHA: string;
 
     constructor() {
-        this.FECHA = new Date();
+        this.FECHA = this.modificarFecha(new Date());
     }
+
+
+
+
+    modificarFecha(fecha) {
+        const ano = (fecha.getFullYear()).toString();
+        let mes = (fecha.getMonth() + 1).toString();
+        let dia = (fecha.getDate()).toString();
+
+        if ( mes.length < 2 ) {
+          mes = '0' + mes;
+        }
+
+        if ( dia.length < 2 ) {
+         dia = '0' + dia;
+       }
+
+        const fechaModif = dia + '-' + mes + '-' + ano;
+        console.log('fecha Modif', fechaModif);
+        return fechaModif;
+      }
 }

@@ -1,4 +1,4 @@
-<div class="row encabezado animated fadeIn fast" style=margin:0>
+<div class="row encabezado animated fadeIn" style=margin:0>
 
     <div class="col-12 col-md-6">
         <p>{{unidad.INAME}} > {{unidad.NNAME}} > </p>
@@ -17,7 +17,26 @@
 <div class="row">
     <div class="col-12">
 
-        <div class="table-responsive">
+        <div class="row titulo">
+            <div class="col-12 col-md-8">
+                <h1>Operaciones Unidad</h1>
+            </div>
+
+            <div class="col-12 col-md-4 dato animated slideInRight">
+                <div class="row">
+                    <div class="col-4 icono">
+                        <i class="fas fa-paint-roller fa-3x"></i>
+                    </div>
+                    <div class="col-8">
+                        <h1>${{costoUnidad | number:'1.0-0' }}</h1>
+                        <p>Costo Unidad</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="table-responsive animated fadeIn">
             <table class="table table-striped table-hover">
                 <thead class="thead-dark">
                     <tr>
@@ -48,6 +67,69 @@
                 </tbody>
             </table>
         </div>
+
+
+        <div class="row titulo">
+
+            <div class="col-12 col-md-8">
+                <h1>Historial Trabajos realizados</h1>
+            </div>
+
+            <div class="col-12 col-md-4 dato animated slideInRight">
+                <div class="row">
+                    <div class="col-4 icono">
+                        <i class="fas fa-hard-hat fa-3x"></i>
+                    </div>
+                    <div class="col-8">
+                        <h1>${{costo | number:'1.0-0' }}</h1>
+                        <p>Costos realizados</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="row buscador animated fadeIn">
+            <div class="col-1 text-center">
+                <i class="fas fa-search fa-2x mt-1 text-primary"></i>
+            </div>
+            <div class="col-11">
+                <input class="form-control" type="text" class="form-control " name="searchString " placeholder="Buscador... " [(ngModel)]="searchString " />
+            </div>
+        </div>
+
+        <div class="table-responsive animated fadeIn">
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Operacion </th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Total </th>
+                        <th scope="col">%</th>
+                        <th scope="col">Fecha </th>
+                        <th scope="col">Revisor</th>
+                    </tr>
+                </thead>
+                <tbody class="f_blanco tabla">
+                    <tr *ngFor="let trabajo of historial  | filter : { 'NOMBRE' : searchString, 'APELLIDO' : searchString, 'APELLIDOMAT' : searchString, 'OPERACION' : searchString, 'FECHA' : searchString, 'REVISOR' : searchString}; index as i" class="pointer">
+                        <td>{{i + 1}}</td>
+                        <td>{{trabajo.NOMBRE | titlecase}} {{trabajo.APELLIDO | titlecase}} {{trabajo.APELLIDOMAT | titlecase}} </td>
+                        <td>{{trabajo.OPERACION | titlecase}}</td>
+                        <td>$ {{trabajo.PRECIO | number:'1.0-0'}}</td>
+                        <td>{{trabajo.CANTIDAD }} <span>{{trabajo.UNIDAD}}</span></td>
+                        <td>$ {{trabajo.TOTAL | number: '1.0-0' }}</td>
+                        <td>{{trabajo.PORCENTAJE}}%</td>
+                        <td>{{trabajo.FECHA }}</td>
+                        <td>{{trabajo.REVISOR}} </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
 
 
     </div>
@@ -142,7 +224,7 @@
                     </tr>
                 </thead>
                 <tbody class="f_blanco">
-                    <tr *ngFor="let operario of operarios | filter : { 'RUT' : searchString, 'NOMBRE' : searchString, 'APELLIDO' : searchString, 'APELLIDOMAT' : searchString}; index as i" class="pointer" (click)="escogerOperario(operario)">
+                    <tr *ngFor="let operario of operarios | filter : { 'RUT' : searchString, 'NOMBRE' : searchString, 'APELLIDO' : searchString, 'APELLIDOMAT' : searchString}; index as i" class="pointer animated fadeInDown" (click)="escogerOperario(operario)">
                         <td>{{i + 1}}</td>
                         <td>{{operario.RUT }}</td>
                         <td>{{operario.NOMBRE | titlecase}} {{operario.APELLIDO | titlecase}} {{operario.APELLIDMAT | titlecase}}</td>

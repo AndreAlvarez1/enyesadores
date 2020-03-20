@@ -1,0 +1,25 @@
+.loading {
+    padding: 80px;
+}
+
+.tabla span {
+    font-size: 0.8em;
+    font-style: italic;
+}
+
+.buscador {
+    padding: 20px;
+}
+
+.excel {
+    margin-top: 20px;
+}
+
+@media (min-width: 800px) {
+    .excel {
+        margin-top: 0;
+    }
+    .submit {
+        margin-top: 30px;
+    }
+}

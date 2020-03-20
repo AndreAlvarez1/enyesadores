@@ -50,16 +50,15 @@ export class ObrasComponent implements OnInit {
   }
 
   traerObras() {
-    this.conex.traeDatos('/tablas/OBRAS')
+    this.conex.traeDatos('/codigos/OBRAS')
         .subscribe(resp => {
-          console.log(resp);
+          console.log('obras', resp);
           this.obras = resp['datos'];
           this.obra.CODIGO = this.nuevoCodigo();
         });
   }
 
   abrir(obra) {
-    console.log(obra);
     this.router.navigateByUrl('/obra/' + obra.CODIGO);
   }
 
@@ -88,7 +87,7 @@ export class ObrasComponent implements OnInit {
   
 
   nuevoCodigo() {
-    const ultimo = this.obras[this.obras.length - 1];
+    const ultimo = this.obras[0];
     let nextCodigo = ultimo.CODIGO;
 
     const numero = (Number(nextCodigo.slice(2, 5)) + 1).toString();
@@ -110,7 +109,6 @@ export class ObrasComponent implements OnInit {
     this.mostrarComunas = true;
     const filtrado = regiones.filter( resp => resp.region === regionSelect );
     this.comunas = filtrado[0].comunas;
-    console.log(this.comunas);
   }
 
   traerCapataces() {
@@ -118,9 +116,6 @@ export class ObrasComponent implements OnInit {
         .subscribe( data => {
           const operarios = data["datos"]
           this.capataces = operarios.filter( operario => operario.TIPO === 'CAPATAZ' && operario.ESTADO === 1 )
-
-          console.log('operarios', operarios);
-          console.log('capataces', this.capataces);
         });
   }
 
@@ -130,7 +125,6 @@ export class ObrasComponent implements OnInit {
 
 
   editarObra(obra) {
-    console.log('obra', obra);
     this.edito = true;
     this.obra = obra;
 

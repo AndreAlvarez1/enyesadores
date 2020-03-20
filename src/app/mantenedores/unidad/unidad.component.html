@@ -34,8 +34,11 @@
             <div class="col-12 mt-2">
                 <button type="submit" class=" btn btn-primary btn-block">Guardar </button>
             </div>
-        </form>
 
+        </form>
+        <div *ngIf="this.pegas.length > 0" class="col-12 mt-2">
+            <button class=" btn btn-warning btn-block" (click)="guardarMolde()">Guardar Molde para clonar</button>
+        </div>
     </div>
 
 

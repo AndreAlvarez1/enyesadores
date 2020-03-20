@@ -47,7 +47,7 @@ traerObra() {
 }
 
 traerInmuebles() {
-  this.conex.traeDatos(`/tablas/INMUEBLES`)
+  this.conex.traeDatos(`/codigos/INMUEBLES`)
             .subscribe( resp => {
               this.todos = resp['datos'];
               this.inmuebles = resp['datos'].filter( i => i.IDOBRA === this.id && i.ESTADO === 1);
@@ -103,11 +103,14 @@ traerInmuebles() {
   }
 
   nuevoCodigo() {
-    const ultimo = this.todos[this.todos.length - 1];
+    console.log('todos', this.todos);
+    const ultimo = this.todos[0];
+
     let nextCodigo = ultimo.CODIGO;
+    console.log('ultimo.CODIGO', ultimo.CODIGO);
 
     const numero = (Number(nextCodigo.slice(1, 5)) + 1).toString();
-    console.log(numero);
+    console.log('numero', numero);
 
     if (numero.length === 1 ) {
       nextCodigo  = 'I000' + numero;

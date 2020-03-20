@@ -1,0 +1,100 @@
+<div class="row encabezado animated fadeIn" style=margin:0>
+
+    <div class="col-12 col-md-3">
+        <h1>Historial</h1>
+    </div>
+
+
+    <form (ngSubmit)="buscar( f )" #f="ngForm" class="col-12 col-md-9 pt-4">
+
+        <div class="row animated fadeIn">
+
+            <div class="col-12 col-md-3 offset-md-3">
+                <div class="form-group">
+                    <label>Fecha Inicial</label>
+                    <input type="date" class="form-control" placeholder="Inicio Periodo" [(ngModel)]="firstDay" name="fechaIni" required>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-3">
+                <div class="form-group">
+                    <label>Fecha Final</label>
+                    <input type="date" class="form-control" placeholder="Fin Periodo" [(ngModel)]="lastDay" name="fechaFin" required>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-2 submit">
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-outline-light btn-block botonMargen">
+                          <i class="fa fa-search"></i>   
+                        </button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+<!-- FIN ENCABEZADO-->
+
+
+<div *ngIf="loading" class="row f_blanco loading">
+    <div class="col-12 text-center">
+        <i style="color:#002157" class="fas fa-brush fa-2x fa-spin"></i>
+        <p>Cargando Datos</p>
+    </div>
+</div>
+
+
+<div *ngIf="!loading" class="row buscador animated fadeIn">
+    <div class="col-1 text-center">
+        <i class="fas fa-search fa-2x mt-1 text-primary"></i>
+    </div>
+    <div class="col-11 col-md-4">
+        <input class="form-control" type="text" class="form-control " name="searchString " placeholder="Buscador... " [(ngModel)]="searchString " />
+    </div>
+    <div class="col-12 col-md-4 offset-md-3 excel">
+        <button class="btn btn-success btn-block" (click)="exportAsXLSX(registros, 'Trabajos Realizados')"><i class="far fa-file-excel"></i> Descargar Excel</button>
+    </div>
+</div>
+
+
+<div *ngIf="!loading" class="table-responsive animated fadeIn tabla">
+    <table class="table table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Operario</th>
+                <th scope="col">Obra</th>
+                <th scope="col">Inmueble</th>
+                <th scope="col">Nivel</th>
+                <th scope="col">Unidad</th>
+                <th scope="col">Operación</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Total </th>
+                <th scope="col">%</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Revisor</th>
+            </tr>
+        </thead>
+        <tbody class="f_blanco">
+            <tr *ngFor="let registro of registros | filter : { 'NOMBRE' : searchString, 'APELLIDO' : searchString, 'APELLIDOMAT' : searchString, 'OBRANAME' : searchString, 'INAME' : searchString, 'NNAME' : searchString, 'UNAME' : searchString, 'OPERACION' : searchString, 'FECHA' : searchString, 'REVISOR' : searchString}; index as i"
+                class="pointer">
+                <td>{{i + 1}}</td>
+                <td>{{registro.NOMBRE | titlecase}} {{registro.APELLIDO | titlecase}} {{registro.APELLIDOMAT | titlecase}}</td>
+                <td>{{registro.OBRANAME | titlecase}}</td>
+                <td>{{registro.INAME | titlecase }}</td>
+                <td>{{registro.NNAME | titlecase}}</td>
+                <td>{{registro.UNAME | titlecase}}</td>
+                <td>{{registro.OPERACION | titlecase}}</td>
+                <td>{{registro.CANTIDAD}}<span>{{registro.UNIDAD}}</span></td>
+                <td>$ {{registro.PRECIO | number:'1.0-0'}}</td>
+                <td>$ {{registro.TOTAL | number:'1.0-0'}}</td>
+                <td>{{registro.PORCENTAJE}}%</td>
+                <td>{{registro.FECHA}}</td>
+                <td>{{registro.REVISOR}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

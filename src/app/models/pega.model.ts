@@ -9,6 +9,7 @@ export class PegaModel {
    REVISOR: string;
    COMPLETADO: number;
    ESTADO: number;
+   OPERACION: string;
 
     constructor() {
         this.ID = 0;
@@ -17,5 +18,7 @@ export class PegaModel {
         this.CREADO = new Date();
         this.ACTUALIZADO = new Date();
         this.COMPLETADO = 0;
+        this.OPERACION = '';
     }
 }
+

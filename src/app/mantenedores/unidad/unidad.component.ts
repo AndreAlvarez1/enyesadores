@@ -64,13 +64,11 @@ export class UnidadComponent implements OnInit {
     });
   }
 
-  // ===========================///
-  // ======= TRAER INFO ========///
-  // ===========================///
+  // =======================================================================///
+  // =======================================================================///
+  // =======================================================================///
 
-volver() {
-  this.router.navigateByUrl(`/unidades/${this.obraId}/Todos`);
-}
+
 
 guardarU(form: NgForm) {
   if ( !form.valid) {
@@ -84,6 +82,8 @@ guardarU(form: NgForm) {
 
   this.verificaCodigo();
 }
+
+
 
 verificaCodigo() {
   this.conex.traeDatos('/pegas/verificaID')
@@ -108,6 +108,22 @@ verificaCodigo() {
             });
 }
 
+guardarMolde() {
+  const molde = [];
+  console.log('pegas', this.pegas);
+  for ( const registro of this.pegas) {
+    const pega = new PegaModel();
+    pega.IDOPERACION = registro.IDOPERACION;
+    pega.META = registro.META;
+    pega.OPERACION = registro.OPERACION;
+    molde.push(pega);
+  }
+  console.log('molde', molde);
+  localStorage.setItem('molde', JSON.stringify(molde));
+  this.exito('Listo, molde de operaciones guardado.');
+}
+
+
 editar(i) {
   console.log('i', i);
   i.IDOPERACION = Number(i.IDOPERACION);
@@ -124,7 +140,9 @@ borrar(i) {
 }
 
 
-
+volver() {
+  this.router.navigateByUrl(`/unidades/${this.obraId}/Todos`);
+}
 
 // WARNINGS
 errorIncompleto() {

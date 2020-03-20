@@ -25,6 +25,7 @@ import { UnidadesComponent } from './mantenedores/unidades/unidades.component';
 import { UnidadComponent } from './mantenedores/unidad/unidad.component';
 import { RegistroComponent } from './mantenedores/registro/registro.component';
 import { PreciosComponent } from './mantenedores/precios/precios.component';
+import { HistorialComponent } from './components/historial/historial.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { PreciosComponent } from './mantenedores/precios/precios.component';
     UnidadesComponent,
     UnidadComponent,
     RegistroComponent,
-    PreciosComponent
+    PreciosComponent,
+    HistorialComponent
   ],
   imports: [
     BrowserModule,

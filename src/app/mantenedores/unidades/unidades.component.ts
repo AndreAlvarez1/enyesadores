@@ -24,6 +24,11 @@ export class UnidadesComponent implements OnInit {
      unidades: any[] = [];
      unidadesAll: any[] = [];
 
+     // Variables para clonar
+     clonar = false;
+     operaciones: any[] = [];
+     idMemoria;
+
 
 //   nivelesALL: any[] = [];
   unidad = {
@@ -53,9 +58,8 @@ export class UnidadesComponent implements OnInit {
 
                 this.unidad.IDOBRA = this.obraId;
 
-              //   if (this.route.snapshot.paramMap.get('inmueble') !== 'todos') {
-              //     this.nivel.IDINMUEBLE = this.inmuebleId;
-              //   }
+                this.operaciones = JSON.parse(localStorage.getItem('molde'));
+
 
               }
 
@@ -181,7 +185,12 @@ filtrarUnidadesN(valor) {
       this.conex.guardarDato('/unidades/insert', this.unidad)
           .subscribe(resp => {
               this.exito('Registro grabado con exito');
+              this.idMemoria = this.unidad.CODIGO;
               this.traerUnidades(this.unidad.IDNIVEL);
+
+              if (localStorage.getItem('molde') ) {
+                this.preguntaClonar();
+              }
             });
     } else {
       this.conex.guardarDato('/unidades/update', this.unidad)
@@ -233,7 +242,25 @@ borrar(i) {
 }
 
 
-// // // Warnings
+guardarClon(){
+  console.log('unidad', this.idMemoria);
+  for ( const operacion of this.operaciones ) {
+        operacion.IDUNIDAD = this.idMemoria;
+  }
+  console.log('nuevo paquete', this.operaciones);
+  this.conex.guardarDato('/clonarOperaciones', this.operaciones).
+  subscribe( resp => {
+             console.log(resp);
+             this.exito('Operaciones clonadas con exito');
+             this.clonar = false;
+  });
+}
+
+
+
+
+
+//  Warnings
 errorIncompleto() {
   Swal.fire({
     title: 'Formulario incompleto!',
@@ -279,5 +306,24 @@ alertaBorrar(i) {
   });
 }
 
+preguntaClonar() {
+  Swal.fire({
+    title: '¿Quieres clonar las operaciones',
+    text: 'tienes un molde en memoria con las operaciones de otra unidad',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si',
+    cancelButtonText: 'No'
+  }).then((result) => {
+    if (result.value) {
+      this.clonar = true;
+      // this.operaciones = JSON.parse(localStorage.getItem('molde'));
+    } else {
+      return;
+    }
+  });
+}
 
 }

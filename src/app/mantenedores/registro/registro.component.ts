@@ -17,7 +17,10 @@ export class RegistroComponent implements OnInit {
   unidad = {};
   pegas: any[] = [];
   operarios: any[] = [];
+  historial: any[] = [];
   usuario = '16.655.789-5';
+  costo;
+  costoUnidad;
 
   cuadrilla: any[] = [];
   operacion;
@@ -32,8 +35,8 @@ export class RegistroComponent implements OnInit {
 
               this.obraId = this.route.snapshot.paramMap.get('obra');
               this.unidadId = this.route.snapshot.paramMap.get('unidad');
-              this.traerPegas();
               this.traerUnidad();
+              this.refrescarData();
               this.traerOperarios();
 
               if (localStorage.getItem('cuadrilla')) {
@@ -52,16 +55,46 @@ export class RegistroComponent implements OnInit {
               });
   }
 
+  refrescarData(){
+    this.traerPegas();
+    this.traerHistorial();
+  }
+
   traerPegas() {
     this.conex.traeDatos(`/operaxuni/${this.obraId}`)
               .subscribe( resp => {
                           this.pegas = resp['datos'].filter( p => p.IDUNIDAD === this.unidadId);
                           console.log('pegas', this.pegas);
+                          this.costoUnidad = this.calcularCosto(this.pegas, 'pegas');
+
             });
   }
 
   traerOperarios() {
     this.conex.traeDatos('/tablas/OPERARIOS').subscribe( resp => { this.operarios = resp['datos']; console.log(this.operarios)});
+  }
+
+  traerHistorial() {
+    this.conex.traeDatos(`/trabajosXUnidad/${this.unidadId}`)
+              .subscribe( resp => {
+                this.historial = resp['datos'];
+                console.log('historial', this.historial);
+                this.costo = this.calcularCosto(this.historial, 'historial');
+              });
+  }
+
+  calcularCosto(pegas, origen) {
+    let suma = 0;
+    if (origen === 'historial') {
+      for (const pega of pegas ) {
+        suma += pega.TOTAL;
+      }
+    } else {
+      for (const pega of pegas ) {
+        suma += pega.PRECIO * pega.META;
+      }
+    }
+    return suma;
   }
 
   selectPega(pega) {
@@ -71,6 +104,7 @@ export class RegistroComponent implements OnInit {
       this.ok();
       return;
     }
+    this.cantidad = this.operacion.META - this.operacion.PROGRESO;
     this.ingresarPega = true;
   }
 
@@ -207,6 +241,7 @@ export class RegistroComponent implements OnInit {
               .subscribe( resp => {
                   console.log(resp);
                   this.ingresarPega = false;
+                  this.refrescarData();
                 });
 
   }

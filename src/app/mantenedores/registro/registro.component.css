@@ -52,6 +52,40 @@
     font-size: 1.1em;
 }
 
+.tabla span {
+    font-size: 0.8em;
+    font-style: italic;
+}
+
+.titulo {
+    padding: 20px;
+}
+
+.titulo h1 {
+    font-size: 2em;
+    font-weight: 700;
+    color: #002157;
+    padding-top: 20px;
+}
+
+.icono {
+    background-color: crimson;
+    color: white;
+    text-align: center;
+    padding: 15px
+}
+
+.dato {
+    background-color: white;
+}
+
+.dato h1 {
+    font-size: 2.2em;
+    font-weight: 700;
+    padding-top: 20px;
+    margin: -10px;
+}
+
 @media (min-width: 800px) {
     .registro,
     .operarios {
