@@ -1,0 +1,32 @@
+<div class="row animated ">
+
+
+    <div class="col-10 offset-1 col-md-4 offset-md-4 text-center caja f_blanco animated fadeInDown">
+        <h1>Resetear <br> Password </h1>
+        <form (ngSubmit)="login(f)" #f="ngForm">
+
+            <div class="campo">
+                <span *ngIf="f.submitted && f.controls['email'].errors" class="text-danger animated fadeIn">Debes ingresar un correo</span>
+                <input class="form-control" type="email" name="email" [(ngModel)]="email" required minlength="3" email placeholder="Email">
+            </div>
+
+            <div class="">
+                <button class="btn btn-outline-success btn-block mt-3" type="submit">
+              Resetear password
+              </button>
+            </div>
+            <hr>
+            <div routerLink="/login" class="pointer">
+                <p class="text-dark">
+                    <i class="fas fa-hand-point-left"></i> Volver
+                </p>
+            </div>
+
+        </form>
+
+
+
+
+
+    </div>
+</div>

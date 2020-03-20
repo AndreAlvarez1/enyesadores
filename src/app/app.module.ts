@@ -26,6 +26,9 @@ import { UnidadComponent } from './mantenedores/unidad/unidad.component';
 import { RegistroComponent } from './mantenedores/registro/registro.component';
 import { PreciosComponent } from './mantenedores/precios/precios.component';
 import { HistorialComponent } from './components/historial/historial.component';
+import { UsuariosComponent } from './components/usuarios/usuarios.component';
+import { UsuarioComponent } from './components/usuario/usuario.component';
+import { ResetpassComponent } from './components/resetpass/resetpass.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +47,10 @@ import { HistorialComponent } from './components/historial/historial.component';
     UnidadComponent,
     RegistroComponent,
     PreciosComponent,
-    HistorialComponent
+    HistorialComponent,
+    UsuariosComponent,
+    UsuarioComponent,
+    ResetpassComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,14 @@
+.formulario {
+    padding: 20px;
+}
+
+.formulario h1 {
+    font-size: 3em;
+    font-weight: 700;
+    line-height: 36px;
+    margin-bottom: 10px;
+}
+
+.campo {
+    margin-top: 20px;
+}

@@ -1,6 +1,6 @@
-<div *ngIf="!(router.url === '/login')">
+<div *ngIf="!(router.url === '/login' || router.url === '/resetpass' )">
     <app-menu></app-menu>
 </div>
-<div [class.contenedor]="!(router.url === '/login')">
+<div [class.contenedor]="!(router.url === '/login' || router.url === '/resetpass')">
     <router-outlet></router-outlet>
 </div>

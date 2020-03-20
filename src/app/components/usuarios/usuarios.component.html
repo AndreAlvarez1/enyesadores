@@ -1,0 +1,58 @@
+<div class="row encabezado animated fadeIn fast" style=margin:0>
+
+    <div class="col-12 col-md-4">
+        <h1>Usuarios Plataforma</h1>
+    </div>
+
+    <div class="col-12 col-md-6 form_izq pt-2">
+        <input type="text" class="form-control " name="searchString " placeholder="Buscador... " [(ngModel)]="searchString " />
+    </div>
+    <div class="col-12 col-md-2 pt-2">
+        <button class="btn btn-outline-light animated jackInTheBox" routerLink="/usuario/nuevo">Crear Nuevo Usuario</button>
+    </div>
+</div>
+
+
+
+<div *ngIf="loading" class="row f_blanco loading">
+    <div class="col-12 text-center">
+        <i style="color:#002157" class="fas fa-brush fa-2x fa-spin"></i>
+        <p>Cargando Datos</p>
+    </div>
+</div>
+
+<div class="row buscador">
+    <div class="col-1 offset-1 text-center">
+        <i class="fas fa-search fa-2x mt-1 text-primary"></i>
+    </div>
+    <div class="col-9">
+        <input class="form-control" type="text" class="form-control " name="searchString " placeholder="Buscador... " [(ngModel)]="searchString " />
+    </div>
+</div>
+
+<div *ngIf="!loading" class="row animated fadeIn fast">
+    <div class="tabla col-12">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre </th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Rut</th>
+                        <th scope="col">Acceso</th>
+                    </tr>
+                </thead>
+                <tbody class="f_blanco">
+                    <tr *ngFor="let usuario of usuarios | filter : { 'NOMBRE' : searchString, 'RUT' : searchString, 'ACCESO' : searchString, 'APELLIDO' : searchString, 'EMAIL' : searchString } ; index as i" class="pointer">
+                        <td>{{i + 1}}</td>
+                        <td>{{usuario.NOMBRE | titlecase}} {{usuario.APELLIDO | titlecase }}</td>
+                        <td>{{usuario.EMAIL}}</td>
+                        <td>{{usuario.RUT}}</td>
+                        <td>{{usuario.ACCESO}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -18,7 +18,7 @@ export class RegistroComponent implements OnInit {
   pegas: any[] = [];
   operarios: any[] = [];
   historial: any[] = [];
-  usuario = '16.655.789-5';
+  usuario;
   costo;
   costoUnidad;
 
@@ -42,6 +42,9 @@ export class RegistroComponent implements OnInit {
               if (localStorage.getItem('cuadrilla')) {
                 this.cuadrillaMemoria = true;
               }
+
+              this.usuario = JSON.parse(localStorage.getItem('user'));
+
   }
 
   ngOnInit() {
@@ -211,7 +214,7 @@ export class RegistroComponent implements OnInit {
       registro.CANTIDAD = this.cantidad * persona.porcentaje / 100;
       registro.PRECIO = this.operacion.PRECIO;
       registro.TOTAL = this.operacion.PRECIO * (this.cantidad * persona.porcentaje / 100);
-      registro.REVISOR = this.usuario;
+      registro.REVISOR = this.usuario.NOMBRE + ' ' + this.usuario.APELLIDO;
 
       paquete.push(registro);
     }
@@ -229,7 +232,7 @@ export class RegistroComponent implements OnInit {
     let pega = new PegaModel();
     pega = this.operacion;
     pega.PROGRESO += this.cantidad;
-    pega.REVISOR = this.usuario;
+    pega.REVISOR = this.usuario.NOMBRE + ' ' + this.usuario.APELLIDO;
     pega.ACTUALIZADO = new Date();
 
     if (pega.PROGRESO === pega.META ) {

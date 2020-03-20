@@ -3,7 +3,41 @@
     <div class="col-10 offset-1 col-md-6 offset-md-3 text-center login">
         <i style="color:#931116" class="fas fa-paint-roller fa-4x"></i>
         <h1>Bienvenido</h1>
-        <button routerLink="/home" class="btn f_azul text-white">Entrar</button>
+        <form (ngSubmit)="login(f)" #f="ngForm" class="animated fadeInLeft">
+
+            <div class="campo">
+                <span *ngIf="f.submitted && f.controls['email'].errors" class="text-danger animated fadeIn">El correo es obligario</span>
+                <input class="form-control" type="email" name="email" [(ngModel)]="usuario.email" required minlength="3" email placeholder="Email">
+            </div>
+
+            <div class="campo" data-validate="Password is required">
+                <span *ngIf="f.submitted && f.controls['pass'].errors" class="text-danger animated fadeIn">El password es obligatorio</span>
+                <input class="form-control" type="password" name="pass" [(ngModel)]="usuario.password" required minlength="6" placeholder="Password">
+            </div>
+
+            <div class="">
+                <button class="btn f_azul text-white btn-block mt-3" type="submit">
+                  Ingresar
+                  </button>
+            </div>
+
+            <div class="campo mb-4">
+                <div class="form-check">
+                    <input [(ngModel)]="recordarme" class="form-check-input" id="ckb1" type="checkbox" name="remember-me">
+                    <label class="form-check-label text-dark" for="defaultCheck1">
+                        Recordarme
+                    </label>
+                </div>
+            </div>
+            <hr>
+            <div>
+                <a routerLink="/resetpass" class="txt1 text-dark">
+                  Olvidé mi contraseña
+                </a>
+            </div>
+
+        </form>
+        <!-- <button routerLink="/home" class="btn f_azul text-white">Entrar</button> -->
     </div>
 
 </div>

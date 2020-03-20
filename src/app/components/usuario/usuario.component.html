@@ -1,0 +1,65 @@
+<div class="row  ">
+    <div class="col-12 col-md-6 f_gris formulario shadow animated fadeIn">
+        <div class="row">
+            <div class="col-6">
+                <h1>Nuevo Usuario</h1>
+            </div>
+            <div class="col-6 text-right">
+                <button class="btn btn-warning" routerLink="/usuarios">Volver</button>
+            </div>
+        </div>
+
+        <form (ngSubmit)="onSubmit( f )" #f="ngForm">
+
+            <div class="campo">
+                <span *ngIf="f.submitted && f.controls['nombre'].errors" class="text-danger animated fadeIn">Debes agregar tu nombre</span>
+                <input class="form-control" type="text" name="nombre" [(ngModel)]="usuario.nombre" required minlenth="6" placeholder="Nombre">
+            </div>
+
+            <div class="campo">
+                <span *ngIf="f.submitted && f.controls['apellido'].errors" class="text-danger animated fadeIn">Debes agregar tus apellidos</span>
+                <input class="form-control" type="text" name="apellido" [(ngModel)]="usuario.apellido" required minlenth="6" placeholder="Apellidos">
+            </div>
+
+            <div class="campo">
+                <span *ngIf="f.submitted && f.controls['rut'].errors" class="text-danger animated fadeIn">Debes agregar un rut valido</span>
+                <input class="form-control" type="text" name="rut" [(ngModel)]="usuario.rut" required minlenth="6" placeholder="ej: 99.999.999-9">
+            </div>
+
+            <div class="campo">
+                <select class="form-control" required name="acceso" [(ngModel)]="usuario.acceso">
+            <option> Administrador </option>
+            <option> Capataz </option>
+      </select>
+            </div>
+
+
+            <div class="campo">
+                <span *ngIf="f.submitted && f.controls['email'].errors" class="text-danger animated fadeIn">Debes agregar un correo</span>
+                <input class="form-control " type="email" name="email" [(ngModel)]="usuario.email" required minlenth="3" email placeholder="Email">
+            </div>
+
+            <div class="campo" data-validate="Password is required">
+                <span *ngIf="f.submitted && f.controls['pass'].errors" class="text-danger animated fadeIn">La contraseña debe de ser más de 6 letras</span>
+                <input class="form-control" type="password" name="pass" [(ngModel)]="usuario.password" required minlenth="6" placeholder="Password">
+            </div>
+
+
+
+
+            <div class="">
+                <button class="btn btn-outline-success btn-block mt-3" type="submit">
+                  Guardar
+                  </button>
+            </div>
+
+            <hr>
+
+
+        </form>
+
+
+
+
+    </div>
+</div>

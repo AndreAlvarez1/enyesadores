@@ -3,8 +3,7 @@
         <i style="color:#931116" class="fas fa-paint-roller fa-4x"></i>
     </div>
     <p>Bievenido:</p>
-    <!-- <p>{{user | titlecase}}</p> -->
-    <p>Luis Alvarez</p>
+    <p>{{user.NOMBRE |titlecase }} {{user.APELLIDO |titlecase }}</p>
 
     <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
     <div class="menu-list">
@@ -16,21 +15,27 @@
                 </a>
             </li>
 
-            <li routerLink="/operarios">
+            <li routerLink="/historial">
                 <a class="nav-link">
-                    <i class="fas fa-hard-hat"></i> Personal
+                    <i class="fas fa-paint-roller"></i> Historial
                 </a>
             </li>
 
             <li routerLink="/operarios">
+                <a class="nav-link">
+                    <i class="fas fa-hard-hat"></i> Operario
+                </a>
+            </li>
+
+            <li routerLink="/usuarios">
                 <a class="nav-link">
                     <i class="fas fa-user"></i> Usuarios
                 </a>
             </li>
 
-            <li routerLink="/historial">
+            <li (click)="salir()">
                 <a class="nav-link">
-                    <i class="fas fa-paint-roller"></i> Historial
+                    <i class="fas fa-door-open"></i> Cerrar Sesión
                 </a>
             </li>
 
