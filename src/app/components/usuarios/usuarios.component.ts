@@ -10,10 +10,12 @@ export class UsuariosComponent implements OnInit {
 
   usuarios: any[] = [];
   loading = false;
+  searchString: string;
 
   constructor( private conex: ConectorService) {
 
     this.traerUsuario();
+    this.conex.evaluarUser('Privado');
   }
 
   ngOnInit() {

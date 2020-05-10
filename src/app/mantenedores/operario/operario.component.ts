@@ -28,6 +28,7 @@ export class OperarioComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router) {
 
+                this.conex.evaluarUser('Privado');
                 this.id = this.route.snapshot.paramMap.get('id');
 
                 if (this.id !== 'nuevo') {

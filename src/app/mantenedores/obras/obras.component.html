@@ -5,9 +5,9 @@
     </div>
 
     <div class="col-12 col-md-6 form_izq pt-2">
-        <input type="text" class="form-control " name="searchString " placeholder="Buscador... " [(ngModel)]="searchString " />
+        <input type="text" class="form-control" name="searchString" placeholder="Buscador..." [(ngModel)]="searchString" />
     </div>
-    <div class="col-12 col-md-2 pt-2">
+    <div *ngIf="acceso === 'Administrador'" class="col-12 col-md-2 pt-2">
         <button class="btn btn-outline-light animated jackInTheBox" data-toggle="modal" data-target="#nuevaObra" (click)="nuevo()">Crear Nueva Obra</button>
     </div>
 </div>
@@ -26,21 +26,20 @@
                         <th scope="col">Comuna</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Abrir</th>
-                        <th scope="col">Editar</th>
+                        <th *ngIf="acceso === 'Administrador'" scope="col">Editar</th>
                     </tr>
                 </thead>
                 <tbody class="f_blanco">
-                    <tr *ngFor="let obra of obras | filter : { 'OBRANAME' : searchString, 'CODIGO' : searchString, 'FECHAINI' : searchString, 'RESPONSABLE' : searchString, 'ESTADO' : searchString, 'REGION' : searchString, 'CIUDAD' : searchString, 'COMUNA' : searchString } ; index as i"
-                        class="pointer">
+                    <tr *ngFor="let obra of obras | filter : { OBRANAME : searchString, CODIGO : searchString, FECHAINI : searchString, RESPONSABLE : searchString, ESTADO : searchString, REGION : searchString, CIUDAD : searchString, COMUNA : searchString }; index as i" class="pointer">
                         <td>{{i + 1}}</td>
                         <td>{{obra.CODIGO}}</td>
                         <td>{{obra.OBRANAME | titlecase}}</td>
-                        <td>{{obra.FECHAINI}}</td>
+                        <td>{{obra.FECHAINI | date: 'dd/MM/yyyy'}}</td>
                         <td>{{obra.REGION | titlecase }}</td>
                         <td>{{obra.COMUNA | titlecase}}</td>
                         <td>{{obra.ESTADO | titlecase}}</td>
                         <td><i (click)="abrir(obra)" class="fas fa-arrow-right fa-2x text-primary"></i></td>
-                        <td><i data-toggle="modal" data-target="#nuevaObra" (click)="editarObra(obra)" class="fas fa-pen"></i></td>
+                        <td *ngIf="acceso === 'Administrador'"><i data-toggle="modal" data-target="#nuevaObra" (click)="editarObra(obra)" class="fas fa-pen"></i></td>
                     </tr>
                 </tbody>
             </table>

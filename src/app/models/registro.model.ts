@@ -29,7 +29,7 @@ export class RegistroModel {
          dia = '0' + dia;
        }
 
-        const fechaModif = dia + '-' + mes + '-' + ano;
+        const fechaModif = ano + '-' + mes + '-' + dia;
         console.log('fecha Modif', fechaModif);
         return fechaModif;
       }

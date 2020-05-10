@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
+import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
+import { ReturnStatement } from '@angular/compiler';
 
 
 
@@ -9,10 +12,16 @@ import { HttpClient} from '@angular/common/http';
 export class ConectorService {
 
 
-  public url = 'http://localhost';
-  public port = 3060;
+  public url = 'http://yeso.clubgournet.cl';
+  public port = 8080;
+  
+  // Local
+  // public url = 'http://localhost';
+  // public port = 3060;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private auth: AuthService,
+              private router: Router) { }
 
 
   traeDatos( ruta ) {
@@ -25,5 +34,19 @@ export class ConectorService {
 
   }
 
+  evaluarUser(acceso) {
+    if (!localStorage.getItem('user')) {
+      this.auth.logout();
+      this.router.navigateByUrl('/login');
+      return;
+    }
+    if (acceso === 'Privado') {
+      if ( JSON.parse(localStorage.getItem('user')).ACCESO !== 'Administrador') {
+         this.router.navigateByUrl('/home');
+      }
+    }
+
+
+  }
 
 }

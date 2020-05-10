@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ConectorService } from 'src/app/services/conector.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ObraModel } from 'src/app/models/obra.model';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -12,7 +13,7 @@ import Swal from 'sweetalert2';
 export class InmueblesComponent implements OnInit {
 
   id;
-  obra: any[] = [];
+  obra        = new ObraModel();
   todos: any[] = []; // <-- inmuebles sin filtrar
   inmuebles: any[] = [];
   inmueble = {
@@ -22,6 +23,8 @@ export class InmueblesComponent implements OnInit {
               OBRA: '',
               ESTADO: 1,
   };
+  searchString: string;
+
 
   constructor(private conex: ConectorService,
               private route: ActivatedRoute,
@@ -31,6 +34,7 @@ export class InmueblesComponent implements OnInit {
                 this.inmueble.IDOBRA = this.id;
                 this.traerObra();
                 this.traerInmuebles();
+                this.conex.evaluarUser('Privado');
               }
 
   ngOnInit() {
@@ -69,7 +73,7 @@ traerInmuebles() {
     this.router.navigateByUrl(`/obra/${this.id}`);
     }
 
-  guardarI(form: NgForm, tarea) {
+  guardarI(form: NgForm) {
     if ( !form.valid) {
       this.errorIncompleto();
       return; }

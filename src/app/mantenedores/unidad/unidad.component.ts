@@ -14,17 +14,31 @@ import Swal from 'sweetalert2';
 })
 export class UnidadComponent implements OnInit {
 
-  obraId = '';
-  unidadId = '';
-  unidad = {};
-  operaciones: any[] = [];
-  pegas: any[] = [];
-  pega: PegaModel = new PegaModel();
+  obraId                = '';
+  unidadId              = '';
+  unidad                = {
+                          CODIGO:'',
+                          UNAME: '',
+                          IDOBRA: '',
+                          IDINMUEBLE: '',
+                          INAME: '',
+                          IDNIVEL: '',
+                          NNAME: '',
+                          TIPO: '',
+                          DESCRIPCION: '',
+                          COMPLETADO: '',
+                        };
+  operaciones: any[]    = [];
+  pegas: any[]          = [];
+  pega: PegaModel       = new PegaModel();
+  searchString: string;
+
 
   constructor(private conex: ConectorService,
               private route: ActivatedRoute,
               private router: Router) {
 
+              this.conex.evaluarUser('Privado');
               this.obraId = this.route.snapshot.paramMap.get('obra');
               this.unidadId = this.route.snapshot.paramMap.get('unidad');
 
@@ -44,6 +58,7 @@ export class UnidadComponent implements OnInit {
     this.conex.traeDatos(`/unidad/${this.obraId}/${this.unidadId}`)
          .subscribe(resp => {
            this.unidad = resp['datos'][0];
+           console.log(this.unidad);
            console.log('unidad', this.unidad);
          });
   }

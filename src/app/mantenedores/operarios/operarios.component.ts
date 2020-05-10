@@ -10,10 +10,14 @@ import { Router } from '@angular/router';
 export class OperariosComponent implements OnInit {
 
   operarios: any[] = [];
+  searchString: string;
+
 
   constructor( private conex: ConectorService,
                private router: Router) {
-    this.traerOperarios();
+
+              this.traerOperarios();
+              this.conex.evaluarUser('Privado');
    }
 
   ngOnInit() {

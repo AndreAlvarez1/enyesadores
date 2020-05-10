@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConectorService } from 'src/app/services/conector.service';
+import { ObraModel } from 'src/app/models/obra.model';
 
 @Component({
   selector: 'app-obra',
@@ -8,11 +9,12 @@ import { ConectorService } from 'src/app/services/conector.service';
   styleUrls: ['./obra.component.css']
 })
 export class ObraComponent implements OnInit {
- 
+
   loading = true;
   id;
+  acceso: string;
   inmuebleId          = 'Todos';
-  obra: any[]         = [];
+  obra                = new ObraModel();
   unidades: any[]     = [];
   niveles: any[]      = [];
   inmuebles: any[]    = [];
@@ -20,9 +22,19 @@ export class ObraComponent implements OnInit {
   unidadesAll: any[]  = [];
   nivelesAll: any[]   = [];
 
-  responsable: any[]  = [];
+  responsable = {
+                    RUT: '',
+                    NOMBRE: '',
+                    APELLIDO: '',
+                    APELLIDOMAT: '',
+                    TIPO: '',
+                    ESTADO: '',
+                    CEL: ''
+                };
   configurar          = false;
   editar              = false;
+  searchString: string;
+
 
   cifras = {
             inmuebles: 0,
@@ -34,7 +46,10 @@ export class ObraComponent implements OnInit {
                private route: ActivatedRoute,
                private router: Router ) {
 
+                this.conex.evaluarUser('Todos');
                 this.id = this.route.snapshot.paramMap.get('id');
+                this.acceso = JSON.parse(localStorage.getItem('user')).ACCESO;
+
 
                 this.traerObra();
                 this.traerUnidades();
@@ -49,6 +64,7 @@ export class ObraComponent implements OnInit {
     this.conex.traeDatos(`/obras/${this.id}`)
               .subscribe( resp => {
                 this.obra = resp['datos'][0];
+                console.log(this.obra);
                 this.traerResponsable(resp['datos'][0].RESPONSABLE);
               });
   }

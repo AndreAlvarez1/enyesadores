@@ -4,30 +4,28 @@
     </div>
     <p>Bievenido:</p>
     <p>{{user.NOMBRE |titlecase }} {{user.APELLIDO |titlecase }}</p>
-
     <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
     <div class="menu-list">
         <ul id="menu-content" class="menu-content collapse out">
-
             <li routerLink="/obras">
                 <a class="nav-link">
                     <i class="fas fa-city"></i> Obras
                 </a>
             </li>
 
-            <li routerLink="/historial">
+            <li *ngIf="user.ACCESO === 'Administrador'" routerLink="/historial">
                 <a class="nav-link">
                     <i class="fas fa-paint-roller"></i> Historial
                 </a>
             </li>
 
-            <li routerLink="/operarios">
+            <li *ngIf="user.ACCESO === 'Administrador'" routerLink="/operarios">
                 <a class="nav-link">
                     <i class="fas fa-hard-hat"></i> Operario
                 </a>
             </li>
 
-            <li routerLink="/usuarios">
+            <li *ngIf="user.ACCESO === 'Administrador'" routerLink="/usuarios">
                 <a class="nav-link">
                     <i class="fas fa-user"></i> Usuarios
                 </a>

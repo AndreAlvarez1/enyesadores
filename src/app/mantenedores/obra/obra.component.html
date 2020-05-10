@@ -6,7 +6,7 @@
     </div>
 
     <div class="col-12 col-md-3 offset-md-3 text-rigth pt-4">
-        <button class="btn btn-outline-success mr-2" (click)="configurar = !configurar">Configurar</button>
+        <button *ngIf="acceso === 'Administrador'" class="btn btn-outline-success mr-2" (click)="configurar = !configurar">Configurar</button>
         <button class="btn btn-outline-warning" routerLink="/obras">Volver</button>
     </div>
 </div>
@@ -241,7 +241,7 @@
 
         <hr>
 
-        <div class="row seccion pointer pt-4" (click)="irMantenedor('excel')">
+        <!-- <div class="row seccion pointer pt-4" (click)="irMantenedor('excel')">
             <div class="col-3 d-flex justify-content-center ">
                 <div class="icono f_verde">
                     <i class="fas fa-building fa-2x"></i>
@@ -251,7 +251,7 @@
                 <h1>Importar Excel</h1>
                 <p>descargar ejemplo</p>
             </div>
-        </div>
+        </div> -->
 
         <hr>
     </div>

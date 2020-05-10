@@ -23,6 +23,7 @@ export class HistorialComponent implements OnInit {
                                                 this.firstDay = this.formatoFecha(this.firstDay);
                                                 this.lastDay = this.formatoFecha(this.lastDay);
                                                 this.traerHistorial(this.firstDay, this.lastDay);
+                                                this.conex.evaluarUser('Privado');
                                               }
 
   ngOnInit() {
@@ -83,7 +84,7 @@ export class HistorialComponent implements OnInit {
   const anno = fecha.slice( 11, 15 );
   const hora = fecha.slice( 16, 24 );
 
-  const fechaSql = dia + '-' + mesNumero + '-' + anno;
+  const fechaSql = anno+ '-' + mesNumero + '-' + dia;
   return fechaSql;
 }
 

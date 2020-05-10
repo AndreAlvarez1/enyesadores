@@ -3,6 +3,7 @@ import { ConectorService } from 'src/app/services/conector.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { ObraModel } from 'src/app/models/obra.model';
 
 
 @Component({
@@ -12,26 +13,29 @@ import Swal from 'sweetalert2';
 })
 export class NivelesComponent implements OnInit {
 
-     obraId = '';
-     obra: any[] = [];
+     obraId            = '';
+     obra              = new ObraModel();
 
-     inmuebleId = '';
-     inmuebles: any[] = [];
+     inmuebleId        = '';
+     inmuebles: any[]  = [];
 
      nivelesALL: any[] = [];
      niveles: any[] = [];
-     nivel = {
-              CODIGO: '',
-              IDOBRA: '',
-              IDINMUEBLE: '',
-              NNAME: '',
-              ESTADO: 1,
-  };
+     nivel          = {
+                        CODIGO: '',
+                        IDOBRA: '',
+                        IDINMUEBLE: '',
+                        NNAME: '',
+                        ESTADO: 1,
+                    };
+     searchString: string;
+
 
   constructor(private conex: ConectorService,
               private route: ActivatedRoute,
               private router: Router) {
 
+                this.conex.evaluarUser('Privado');
                 this.obraId = this.route.snapshot.paramMap.get('obra');
                 this.inmuebleId = this.route.snapshot.paramMap.get('inmueble');
 
@@ -113,7 +117,7 @@ filtrarNiveles(valor) {
       }
     }
 
-  guardarN(form: NgForm, tarea) {
+  guardarN(form: NgForm) {
     if ( !form.valid) {
       this.errorIncompleto();
       return; }

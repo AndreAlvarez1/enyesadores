@@ -92,7 +92,7 @@
                 <td>$ {{registro.PRECIO | number:'1.0-0'}}</td>
                 <td>$ {{registro.TOTAL | number:'1.0-0'}}</td>
                 <td>{{registro.PORCENTAJE}}%</td>
-                <td>{{registro.FECHA}}</td>
+                <td>{{registro.FECHA | date: 'dd/MM/yyyy'}}</td>
                 <td>{{registro.REVISOR}}</td>
             </tr>
         </tbody>

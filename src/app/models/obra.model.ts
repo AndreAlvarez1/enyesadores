@@ -12,3 +12,4 @@ export class ObraModel {
     DIRECCION: string;
     constructor() {}
 }
+

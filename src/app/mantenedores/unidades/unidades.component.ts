@@ -3,6 +3,7 @@ import { ConectorService } from 'src/app/services/conector.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { ObraModel } from 'src/app/models/obra.model';
 
 @Component({
   selector: 'app-unidades',
@@ -11,17 +12,17 @@ import Swal from 'sweetalert2';
 })
 export class UnidadesComponent implements OnInit {
 
-     obraId = '';
-     inmuebleId = '';
-     nivelId = '';
+     obraId             = '';
+     inmuebleId         = '';
+     nivelId            = '';
 
-     obra: any[] = [];
-     inmueble: any[] = [];
+     obra               = new ObraModel();
+     inmueble: any[]    = [];
 
-     inmuebles: any[] = [];
-     nivelesAll: any[] = [];
-     niveles: any[] = [];
-     unidades: any[] = [];
+     inmuebles: any[]   = [];
+     nivelesAll: any[]  = [];
+     niveles: any[]     = [];
+     unidades: any[]    = [];
      unidadesAll: any[] = [];
 
      // Variables para clonar
@@ -42,12 +43,15 @@ export class UnidadesComponent implements OnInit {
            DESCRIPCION: '',
            ESTADO: 1
   };
+  searchString: string;
+
 
 
   constructor(private conex: ConectorService,
               private route: ActivatedRoute,
               private router: Router) {
 
+                this.conex.evaluarUser('Privado');
                 this.obraId = this.route.snapshot.paramMap.get('obra');
                 this.nivelId = this.route.snapshot.paramMap.get('nivel');
 
@@ -167,7 +171,7 @@ filtrarUnidadesN(valor) {
       }
     }
 
-  guardarU(form: NgForm, tarea) {
+  guardarU(form: NgForm) {
     if ( !form.valid) {
       this.errorIncompleto();
       return; }

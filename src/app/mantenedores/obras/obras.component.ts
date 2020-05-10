@@ -17,7 +17,7 @@ import Swal from 'sweetalert2';
 export class ObrasComponent implements OnInit {
 
   @ViewChild('closebutton') closebutton;
-  obra: ObraModel;
+  obra: ObraModel = new ObraModel();
   obras: any[] = [];
   capataces: any[] = [];
   regionesAll: any[] = [];
@@ -25,12 +25,16 @@ export class ObrasComponent implements OnInit {
   siguienteCodigo = '';
   mostrarComunas = false;
   edito: boolean;
+  acceso: string;
+  searchString: string;
 
   constructor(private conex: ConectorService,
               private router: Router) {
               this.cargarDatos();
               this.regionesAll = regiones;
 
+              this.conex.evaluarUser('Todos');
+              this.acceso = JSON.parse(localStorage.getItem('user')).ACCESO;
               this.obra = new ObraModel();
    }
 

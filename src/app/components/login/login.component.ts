@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
                 this.traerUsuario();
               }, (err) => {
                 Swal.close();
-                this.error(err.error.error.message);
+                this.error('Datos no coinciden', 'Intenalo de nuevo' + err.error.error.message);
               });
   }
 
@@ -63,12 +63,14 @@ export class LoginComponent implements OnInit {
                 localStorage.setItem('user', JSON.stringify(user[0]));
                 Swal.close();
                 this.router.navigateByUrl('/home');
+              }, (err) => {
+                this.error('Error conectandose al Servidor', err.errror)
               });
   }
 
-  error(mensaje) {
+  error(titulo, mensaje) {
     Swal.fire({
-      title: 'Intentalo de nuevo',
+      title: titulo,
       text: mensaje,
       icon: 'warning'
     });

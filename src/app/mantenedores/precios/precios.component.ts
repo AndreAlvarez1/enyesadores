@@ -21,11 +21,14 @@ export class PreciosComponent implements OnInit {
             IDOBRA: '',
             PRECIO: '',
   };
+  searchString: string;
+
 
   constructor(private conex: ConectorService,
               private route: ActivatedRoute,
               private router: Router) {
 
+                this.conex.evaluarUser('Privado');
                 this.obraId = this.route.snapshot.paramMap.get('obra');
                 this.traerOperaciones();
                 this.traerPrecios();

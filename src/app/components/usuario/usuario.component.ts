@@ -18,7 +18,11 @@ export class UsuarioComponent implements OnInit {
 
   constructor( private auth: AuthService,
                private conex: ConectorService,
-               private router: Router) { }
+               private router: Router) {
+
+                this.conex.evaluarUser('Privado');
+
+               }
 
   ngOnInit() {
     this.usuario = new UsuarioModel();

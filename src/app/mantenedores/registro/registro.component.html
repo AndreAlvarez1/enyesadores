@@ -168,7 +168,7 @@
             </div>
         </div>
 
-        <div *ngIf="cuadrilla.length < 1 " class="row">
+        <div *ngIf="cuadrilla.length < 1 && cuadrillaMemoria" class="row">
             <div class="col-12">
                 <button class="btn btn-warning btn-block" (click)="traerCuadrilla()">¿Traer última cuadrilla?</button>
             </div>

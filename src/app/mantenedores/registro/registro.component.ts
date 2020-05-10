@@ -12,22 +12,35 @@ import { PegaModel } from 'src/app/models/pega.model';
 })
 export class RegistroComponent implements OnInit {
 
-  obraId = '';
-  unidadId = '';
-  unidad = {};
-  pegas: any[] = [];
-  operarios: any[] = [];
-  historial: any[] = [];
+  obraId          = '';
+  unidadId        = '';
+  unidad          = {
+                      CODIGO: '',
+                      UNAME: '',
+                      IDOBRA: '',
+                      IDINMUEBLE: '',
+                      INAME: '',
+                      IDNIVEL: '',
+                      NNAME: '',
+                      TIPO: '',
+                      DESCRIPCION: '',
+                      COMPLETADO: '',
+                    };
+  pegas: any[]      = [];
+  operarios: any[]  = [];
+  historial: any[]  = [];
   usuario;
   costo;
   costoUnidad;
 
-  cuadrilla: any[] = [];
+  cuadrilla: any[]  = [];
   operacion;
-  cantidad = 0;
-  ingresarPega = false;
+  cantidad          = 0;
+  ingresarPega      = false;
 
-  cuadrillaMemoria = false;
+  cuadrillaMemoria  = false;
+  searchString: string;
+
 
   constructor(private conex: ConectorService,
               private route: ActivatedRoute,
@@ -38,6 +51,7 @@ export class RegistroComponent implements OnInit {
               this.traerUnidad();
               this.refrescarData();
               this.traerOperarios();
+              this.conex.evaluarUser('Todos');
 
               if (localStorage.getItem('cuadrilla')) {
                 this.cuadrillaMemoria = true;
@@ -203,6 +217,15 @@ export class RegistroComponent implements OnInit {
   }
 
   armarPaquete() {
+    Swal.fire({
+      allowOutsideClick: false,
+      title: 'Guardando avance',
+      text: 'Espere por favor',
+      icon: 'info',
+    });
+
+    Swal.showLoading();
+
     const paquete: any[] = [];
 
     for (const persona of this.cuadrilla) {
@@ -244,8 +267,9 @@ export class RegistroComponent implements OnInit {
               .subscribe( resp => {
                   console.log(resp);
                   this.ingresarPega = false;
+                  Swal.close();
                   this.refrescarData();
-                });
+              });
 
   }
 
