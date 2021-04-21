@@ -112,10 +112,11 @@
                         <th scope="col">%</th>
                         <th scope="col">Fecha </th>
                         <th scope="col">Revisor</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody class="f_blanco tabla">
-                    <tr *ngFor="let trabajo of historial  | filter : { 'NOMBRE' : searchString, 'APELLIDO' : searchString, 'APELLIDOMAT' : searchString, 'OPERACION' : searchString, 'FECHA' : searchString, 'REVISOR' : searchString}; index as i" class="pointer">
+                    <tr *ngFor="let trabajo of historial  | filter : { 'NOMBRE' : searchString, 'APELLIDO' : searchString, 'APELLIDOMAT' : searchString, 'OPERACION' : searchString, 'FECHA' : searchString, 'REVISOR' : searchString}; index as i" class="pointer" (click)="preguntaBorrar(trabajo)">
                         <td>{{i + 1}}</td>
                         <td>{{trabajo.NOMBRE | titlecase}} {{trabajo.APELLIDO | titlecase}} {{trabajo.APELLIDOMAT | titlecase}} </td>
                         <td>{{trabajo.OPERACION | titlecase}}</td>
@@ -123,8 +124,9 @@
                         <td>{{trabajo.CANTIDAD }} <span>{{trabajo.UNIDAD}}</span></td>
                         <td>$ {{trabajo.TOTAL | number: '1.0-0' }}</td>
                         <td>{{trabajo.PORCENTAJE}}%</td>
-                        <td>{{trabajo.FECHA }}</td>
+                        <td>{{trabajo.FECHA | date: 'dd-MM-yyyy' }}</td>
                         <td>{{trabajo.REVISOR}} </td>
+                        <td><i class="fas fa-trash"></i></td>
                     </tr>
                 </tbody>
             </table>

@@ -12,11 +12,11 @@ import { ReturnStatement } from '@angular/compiler';
 export class ConectorService {
 
 
-  public url = 'http://yeso.clubgournet.cl';
+  // public url = 'http://yeso.clubgournet.cl';
   public port = 8080;
   
   // Local
-  // public url = 'http://localhost';
+  public url = 'http://localhost';
   // public port = 3060;
 
   constructor(private http: HttpClient,

@@ -40,6 +40,8 @@ export class RegistroComponent implements OnInit {
 
   cuadrillaMemoria  = false;
   searchString: string;
+  registro: RegistroModel;
+  hoy = new Date();
 
 
   constructor(private conex: ConectorService,
@@ -263,6 +265,7 @@ export class RegistroComponent implements OnInit {
     }
 
     console.log('acaa', pega);
+    console.log('operacion', this.operacion);
     this.conex.guardarDato('/operaxuni/update', this.operacion)
               .subscribe( resp => {
                   console.log(resp);
@@ -272,6 +275,58 @@ export class RegistroComponent implements OnInit {
               });
 
   }
+
+  borrarOperacion(t:any){
+  console.log('t',t);
+  const arr = this.historial.filter( tra => tra.IDOPERACION === t.IDOPERACION && tra.FECHA === t.FECHA);
+  console.log('arr',arr);
+  let sum = 0
+  let porcentaje = 0;
+  for (let a of arr){
+    sum += a.CANTIDAD;
+    porcentaje += a.PORCENTAJE;
+  }
+    if (porcentaje !== 100){
+      console.log('no se puede');
+      return;
+    } 
+
+    console.log('ok se puede borrar, total', sum, t.FECHA);
+
+    const body = {
+                    IDOPERACION: t.IDOPERACION,
+                    FECHA: this.modifFecha(t.FECHA),
+                    IDUNIDAD: t.IDUNIDAD
+                }
+
+                console.log('body', body)
+
+    this.conex.guardarDato('/deleteTrabajo', body)
+              .subscribe ( resp => { 
+                            console.log('resp', resp);
+                            this.operacion = this.pegas.find( p => p.IDOPERACION === t.IDOPERACION.toString());
+                            console.log('this.operacion', this.operacion);
+                           
+                            this.operacion.PROGRESO -= sum;
+                            this.operacion.COMPLETADO = 0;  
+                           
+                            this.conex.guardarDato('/operaxuni/update', this.operacion)
+                                      .subscribe( resp => {
+                                          console.log(resp);
+                                          this.refrescarData();
+                                          Swal.fire(
+                                            'Borrados!',
+                                            'Actualizado la unidad',
+                                            'success'
+                                          )
+                                     }, err => { console.log('error', err); }
+                          );
+                        });
+}
+
+
+
+
 
   volver() {
     this.router.navigateByUrl(`/obra/${this.obraId}`);
@@ -296,6 +351,33 @@ ok() {
   });
 }
 
+preguntaBorrar(t){
+  Swal.fire({
+    title: 'Seguro que quieres borrar esta operación?',
+    text: "Se borrarán de todas las personas que participaron",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, borrar'
+  }).then((result) => {
+    if (result.value === true) {
+      console.log('si', result);
+      this.borrarOperacion(t);
+    } else {
+      console.log('no',result)
+    }
+  })
+ 
+}
+
+
+modifFecha(fech){
+  console.log('aca', fech)
+  const newFecha = fech.slice(0, 10)
+  console.log(newFecha);
+  return newFecha;
+}
 
 
 }
