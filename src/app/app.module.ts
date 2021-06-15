@@ -25,6 +25,8 @@ import { HistorialComponent } from './components/historial/historial.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { ResetpassComponent } from './components/resetpass/resetpass.component';
+import { PorpagarComponent } from './informes/porpagar/porpagar.component';
+import { MetrosComponent } from './informes/metros/metros.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,8 @@ import { ResetpassComponent } from './components/resetpass/resetpass.component';
     UsuariosComponent,
     UsuarioComponent,
     ResetpassComponent,
+    PorpagarComponent,
+    MetrosComponent,
   ],
   imports: [
     BrowserModule,

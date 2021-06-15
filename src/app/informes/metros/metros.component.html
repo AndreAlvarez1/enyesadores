@@ -1,0 +1,161 @@
+<div class="row encabezado animated fadeIn" style=margin:0>
+
+  <div class="col-12 col-md-3">
+      <h1 (click)="info()">Metros Supervisados</h1>
+  </div>
+
+
+  <form (ngSubmit)="buscar( f )" #f="ngForm" class="col-12 col-md-9 pt-4">
+
+      <div class="row animated fadeIn">
+
+          <div class="col-12 col-md-3 offset-md-3">
+              <div class="form-group">
+                  <label>Fecha Inicial</label>
+                  <input type="date" class="form-control" placeholder="Inicio Periodo" [(ngModel)]="firstDay" name="fechaIni" required>
+              </div>
+          </div>
+
+          <div class="col-12 col-md-3">
+              <div class="form-group">
+                  <label>Fecha Final</label>
+                  <input type="date" class="form-control" placeholder="Fin Periodo" [(ngModel)]="lastDay" name="fechaFin" required>
+              </div>
+          </div>
+
+          <div class="col-12 col-md-2 submit">
+              <div class="form-group text-center">
+                  <button type="submit" class="btn btn-outline-light btn-block botonMargen">
+                        <i class="fa fa-search"></i>   
+                      </button>
+              </div>
+          </div>
+      </div>
+
+  </form>
+
+</div>
+<!-- FIN ENCABEZADO-->
+
+
+<div *ngIf="loading" class="row f_blanco loading">
+  <div class="col-12 text-center">
+      <i style="color:#002157" class="fas fa-brush fa-2x fa-spin"></i>
+      <p>Cargando Datos</p>
+  </div>
+</div>
+
+
+<div *ngIf="!loading" class="row buscador animated fadeIn">
+  <div class="col-1 text-center">
+      <i class="fas fa-search fa-2x mt-1 text-primary"></i>
+  </div>
+  <div class="col-11 col-md-4">
+      <input class="form-control" type="text" class="form-control " name="searchString " placeholder="Buscador... " [(ngModel)]="searchString " />
+  </div>
+  <div class="col-12 col-md-4 offset-md-3 excel">
+      <button class="btn btn-success btn-block" (click)="exportAsXLSX(capataces, 'Platas por operario')"><i class="far fa-file-excel"></i> Descargar Excel</button>
+  </div>
+</div>
+
+
+<div *ngIf="!loading" class="table-responsive animated fadeIn tabla">
+
+  <table class="table table-striped table-hover">
+      <thead class="thead-dark">
+          <tr>
+              <th scope="col">#</th>
+              <th scope="col">Operario</th>
+              <th scope="col">Trabajos realizados</th>
+              <th scope="col">Metros de supervisados de Muros y Losas</th>
+      </thead>
+      <tbody class="f_blanco">
+          <tr *ngFor="let o of capataces | filter : { 'nombre' : searchString }; index as i"
+              class="pointer" (click)="verOperario(o)">
+              <td>{{i + 1}}</td>
+              <td>{{o.nombre | titlecase}} </td>
+              <td>{{o.trabajos.length }}</td>
+              <td>{{o.metros | number }} mts</td>
+          </tr>
+      </tbody>
+  </table>
+</div>
+
+<!---------------------------------------------------------------------->
+<!---------------------------------------------------------------------->
+<!-------------------------------Modal detalle-------------------------->
+<!---------------------------------------------------------------------->
+<!---------------------------------------------------------------------->
+
+<div *ngIf="modalOperario" class="row fondoModif animated fadeIn">
+  <div class="col-10 col-md-8 animated slideInLeft" style="padding:0">
+
+      <div class="row tituloModal f_azul">
+          <div class="col-7 col-md-8">
+              <h1>Trabajos Supervisados</h1>
+          </div>
+          <div class="col-5 col-md-4 text-right pointer" (click)="modalOperario = !modalOperario">
+              <h1><i class="fas fa-times"></i></h1>
+          </div>
+      </div>
+
+
+      <div class="row infoModal f_blanco pt-4">
+          <div class="col-12 ">
+              <h1>{{capataz.nombre | titlecase}} </h1>
+              <h2>Trabajos: {{capataz.trabajos.length }}</h2>
+              <h2>Metros de supervisados de Muros y Losas: {{capataz.metros | number }} mts</h2>
+          </div>
+      </div>
+
+      <div class="row trabajos f_blanco pt-4">
+          <div class="col-12 ">
+              <table class="table table-striped table-hover">
+              <thead class="thead-dark">
+                  <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Operario</th>
+                      <th scope="col">Obra</th>
+                      <th scope="col">Inmueble</th>
+                      <th scope="col">Nivel</th>
+                      <th scope="col">Unidad</th>
+                      <th scope="col">Operación</th>
+                      <th scope="col">Cantidad</th>
+                      <th scope="col">Precio</th>
+                      <th scope="col">Total </th>
+                      <th scope="col">%</th>
+                      <th scope="col">Fecha</th>
+                  </tr>
+              </thead>
+              <tbody class="f_blanco">
+                  <tr *ngFor="let t of capataz.trabajos; index as i"
+                      class="pointer">
+                      <td>{{i + 1}}</td>
+                      <td>{{t.NOMBRE | titlecase}} {{t.APELLIDO | titlecase}} {{t.APELLIDOMAT | titlecase}}</td>
+                      <td>{{t.OBRANAME | titlecase}}</td>
+                      <td>{{t.INAME | titlecase }}</td>
+                      <td>{{t.NNAME | titlecase}}</td>
+                      <td>{{t.UNAME | titlecase}}</td>
+                      <td>{{t.OPERACION | titlecase}}</td>
+                      <td>{{t.CANTIDAD}}<span>{{t.UNIDAD}}</span></td>
+                      <td>$ {{t.PRECIO | number:'1.0-0'}}</td>
+                      <td>$ {{t.TOTAL | number:'1.0-0'}}</td>
+                      <td>{{t.PORCENTAJE}}%</td>
+                      <td>{{t.FECHA | date: 'dd/MM/yyyy'}}</td>
+                  </tr>
+              </tbody>
+      </table>
+          </div>
+      </div>
+
+      <hr>
+
+     
+  </div>
+</div>
+
+<!---------------------------------------------------------------------->
+<!---------------------------------------------------------------------->
+<!-------------------------------Modal detalle-------------------------->
+<!---------------------------------------------------------------------->
+<!---------------------------------------------------------------------->

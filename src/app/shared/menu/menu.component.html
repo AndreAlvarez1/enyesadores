@@ -30,6 +30,17 @@
                     <i class="fas fa-user"></i> Usuarios
                 </a>
             </li>
+            <li *ngIf="user.ACCESO === 'Administrador'" routerLink="/xpagar">
+                <a class="nav-link">
+                    <i class="fas fa-user"></i> Historial por Operario
+                </a>
+            </li>
+            <li *ngIf="user.ACCESO === 'Administrador'" routerLink="/metrosxcapataz">
+                <a class="nav-link">
+                    <i class="fas fa-user"></i> Metros por Capataz
+                </a>
+            </li>
+            
 
             <li (click)="salir()">
                 <a class="nav-link">

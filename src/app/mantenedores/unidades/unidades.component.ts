@@ -107,7 +107,10 @@ traerInmuebles() {
 traerNiveles() {
   this.conex.traeDatos(`/tablas/NIVELES`)
             .subscribe( resp => {
+              console.log('recibo niveles', resp['datos'])
               this.nivelesAll = resp['datos'].filter( n => n.IDOBRA === this.obraId && n.ESTADO === 1);
+              console.log('niveles all', this.nivelesAll )
+
               // this.camposXdefecto();
             });
 }

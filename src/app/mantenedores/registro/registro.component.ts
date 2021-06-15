@@ -66,6 +66,11 @@ export class RegistroComponent implements OnInit {
   ngOnInit() {
   }
 
+  info() {
+    console.log('usuario', this.usuario);
+
+  }
+
   traerUnidad() {
     this.conex.traeDatos(`/unidad/${this.obraId}/${this.unidadId}`)
               .subscribe( resp => {
