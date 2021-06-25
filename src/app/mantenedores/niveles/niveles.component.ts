@@ -102,6 +102,11 @@ filtrarNiveles(valor) {
 
   editar(i) {
     console.log(i);
+    // AL CLONAR UN NIVEL TENGO QUE CREAR TODAS LAS UNIDADES DE OTRO NIVEL
+    // GUARDAR UN CAMPO CLONADE DONDE GUARDE EL ID DE LA UNIDAD DE REFERENCIA
+    // ESTO PARA SABER QUE OPERACIONES CLONARLE
+
+
     this.nivel = i;
   }
 

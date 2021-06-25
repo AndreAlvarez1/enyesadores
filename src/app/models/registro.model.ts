@@ -8,6 +8,7 @@ export class RegistroModel {
     TOTAL: number;
     REVISOR: string;
     FECHA: string;
+    workID: string;
 
     constructor() {
         this.FECHA = this.modificarFecha(new Date());

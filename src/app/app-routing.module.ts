@@ -17,6 +17,8 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { AuthGuard } from './guards/auth.guard';
 import { ResetpassComponent } from './components/resetpass/resetpass.component';
+import { PorpagarComponent } from './informes/porpagar/porpagar.component';
+import { MetrosComponent } from './informes/metros/metros.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -35,6 +37,8 @@ const routes: Routes = [
   {path: 'precios/:obra', component: PreciosComponent, canActivate: [AuthGuard]},
   {path: 'registro/:obra/:unidad', component: RegistroComponent, canActivate: [AuthGuard]},
   {path: 'historial', component: HistorialComponent, canActivate: [AuthGuard]},
+  {path: 'xpagar', component: PorpagarComponent, canActivate: [AuthGuard]},
+  {path: 'metrosxcapataz', component: MetrosComponent, canActivate: [AuthGuard]},
 
   {path: '', pathMatch: 'full', redirectTo: 'login'},
   {path: '**', pathMatch: 'full', redirectTo: 'login'}

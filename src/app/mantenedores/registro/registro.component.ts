@@ -43,7 +43,6 @@ export class RegistroComponent implements OnInit {
   registro: RegistroModel;
   hoy = new Date();
 
-
   constructor(private conex: ConectorService,
               private route: ActivatedRoute,
               private router: Router) {
@@ -64,6 +63,11 @@ export class RegistroComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  info() {
+    console.log('usuario', this.usuario);
+
   }
 
   traerUnidad() {
@@ -230,6 +234,8 @@ export class RegistroComponent implements OnInit {
 
     const paquete: any[] = [];
 
+    const timeStamp = this.generarId();
+
     for (const persona of this.cuadrilla) {
       const registro = new RegistroModel();
       registro.RUT = persona.rut;
@@ -240,6 +246,7 @@ export class RegistroComponent implements OnInit {
       registro.PRECIO = this.operacion.PRECIO;
       registro.TOTAL = this.operacion.PRECIO * (this.cantidad * persona.porcentaje / 100);
       registro.REVISOR = this.usuario.NOMBRE + ' ' + this.usuario.APELLIDO;
+      registro.workID = timeStamp;
 
       paquete.push(registro);
     }
@@ -278,7 +285,7 @@ export class RegistroComponent implements OnInit {
 
   borrarOperacion(t:any){
   console.log('t',t);
-  const arr = this.historial.filter( tra => tra.IDOPERACION === t.IDOPERACION && tra.FECHA === t.FECHA);
+  const arr = this.historial.filter( tra => tra.workID === t.workID);
   console.log('arr',arr);
   let sum = 0
   let porcentaje = 0;
@@ -291,12 +298,15 @@ export class RegistroComponent implements OnInit {
       return;
     } 
 
+
+
     console.log('ok se puede borrar, total', sum, t.FECHA);
 
     const body = {
                     IDOPERACION: t.IDOPERACION,
                     FECHA: this.modifFecha(t.FECHA),
-                    IDUNIDAD: t.IDUNIDAD
+                    IDUNIDAD: t.IDUNIDAD,
+                    workID: t.workID
                 }
 
                 console.log('body', body)
@@ -306,8 +316,11 @@ export class RegistroComponent implements OnInit {
                             console.log('resp', resp);
                             this.operacion = this.pegas.find( p => p.IDOPERACION === t.IDOPERACION.toString());
                             console.log('this.operacion', this.operacion);
-                           
                             this.operacion.PROGRESO -= sum;
+
+                            if (this.operacion.PROGRESO < 0) {
+                              this.operacion.PROGRESO = 0;
+                            }
                             this.operacion.COMPLETADO = 0;  
                            
                             this.conex.guardarDato('/operaxuni/update', this.operacion)
@@ -379,5 +392,11 @@ modifFecha(fech){
   return newFecha;
 }
 
+generarId(){
+  const date = new Date();
+  let new_id = date.getTime().toString();
+  console.log('new id', new_id)
+  return new_id;
+}
 
 }

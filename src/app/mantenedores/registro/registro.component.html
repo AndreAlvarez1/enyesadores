@@ -2,7 +2,7 @@
 
     <div class="col-12 col-md-6">
         <p>{{unidad.INAME}} > {{unidad.NNAME}} > </p>
-        <h1>{{unidad.UNAME}}</h1>
+        <h1 (click)="info()">{{unidad.UNAME}}</h1>
         <p>Tipo: {{unidad.TIPO}}</p>
     </div>
 
@@ -28,7 +28,7 @@
                         <i class="fas fa-paint-roller fa-3x"></i>
                     </div>
                     <div class="col-8">
-                        <h1>${{costoUnidad | number:'1.0-0' }}</h1>
+                        <h1>${{costoUnidad | number :'1.0-0' }}</h1>
                         <p>Costo Unidad</p>
                     </div>
                 </div>
@@ -95,7 +95,7 @@
                 <i class="fas fa-search fa-2x mt-1 text-primary"></i>
             </div>
             <div class="col-11">
-                <input class="form-control" type="text" class="form-control " name="searchString " placeholder="Buscador... " [(ngModel)]="searchString " />
+                <input class="form-control" type="text" class="form-control " name="searchString " placeholder="Buscador... " [(ngModel)]="searchString" />
             </div>
         </div>
 
@@ -112,11 +112,11 @@
                         <th scope="col">%</th>
                         <th scope="col">Fecha </th>
                         <th scope="col">Revisor</th>
-                        <th scope="col"></th>
+                        <th  *ngIf=" usuario.ACCESO === 'Administrador' " scope="col"></th>
                     </tr>
                 </thead>
                 <tbody class="f_blanco tabla">
-                    <tr *ngFor="let trabajo of historial  | filter : { 'NOMBRE' : searchString, 'APELLIDO' : searchString, 'APELLIDOMAT' : searchString, 'OPERACION' : searchString, 'FECHA' : searchString, 'REVISOR' : searchString}; index as i" class="pointer" (click)="preguntaBorrar(trabajo)">
+                    <tr *ngFor="let trabajo of historial  | filter : { 'NOMBRE' : searchString, 'APELLIDO' : searchString, 'APELLIDOMAT' : searchString, 'OPERACION' : searchString, 'FECHA' : searchString, 'REVISOR' : searchString}; index as i" class="pointer" >
                         <td>{{i + 1}}</td>
                         <td>{{trabajo.NOMBRE | titlecase}} {{trabajo.APELLIDO | titlecase}} {{trabajo.APELLIDOMAT | titlecase}} </td>
                         <td>{{trabajo.OPERACION | titlecase}}</td>
@@ -126,7 +126,7 @@
                         <td>{{trabajo.PORCENTAJE}}%</td>
                         <td>{{trabajo.FECHA | date: 'dd-MM-yyyy' }}</td>
                         <td>{{trabajo.REVISOR}} </td>
-                        <td><i class="fas fa-trash"></i></td>
+                        <td *ngIf=" usuario.ACCESO === 'Administrador' " ><i class="fas fa-trash" (click)="preguntaBorrar(trabajo)"></i></td>
                     </tr>
                 </tbody>
             </table>

@@ -1,0 +1,24 @@
+.tituloModal {
+    padding:20px;
+    }
+    
+    .tituloModal h1 {
+        font-weight: 700;
+        color: white;
+    }
+    
+    .infoModal h1{
+        font-weight: 700;
+        font-size: 1.3em;
+    }
+    
+    .infoModal h2{
+        font-size: 1em;
+    }
+    
+    
+    
+    .trabajos {
+        max-height: 70vh;
+        overflow: auto;
+    }
