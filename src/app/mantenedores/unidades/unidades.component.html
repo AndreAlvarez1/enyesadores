@@ -1,7 +1,7 @@
 <div class="row encabezado animated fadeIn fast" style=margin:0>
 
     <div class="col-12 col-md-6">
-        <h1>Configuración</h1>
+        <h1 (click)="info()">Configuración</h1>
         <h3>Unidades de Control</h3>
     </div>
 
@@ -29,14 +29,18 @@
 
             <div class="col-12 form-group animated fadeIn">
                 <label for="inmueble">Inmueble</label>
-                <select class="form-control" required name="inmueble" [(ngModel)]="unidad.IDINMUEBLE" (change)="filtrarUnidadesI($event.target.value)">
+                <select class="form-control" required name="inmueble" [(ngModel)]="unidad.IDINMUEBLE" [ngModelOptions]="{standalone: true}" (change)="filtrarUnidadesI($event.target.value)">
+                    
                   <option>Todos</option>
-                  <option *ngFor="let inmueble of inmuebles" [(ngValue)]="inmueble.CODIGO" >{{inmueble.INAME | titlecase}}</option>
+                  <option *ngFor="let inmueble of inmuebles" [value]="inmueble.CODIGO" >{{inmueble.INAME | titlecase}}</option>
               </select>
             </div>
+
+
+
             <!-- [(ngValue)]="inmueble.CODIGO" -->
 
-            <div class="col-12 form-group animated fadeIn">
+            <div *ngIf="nivelId != 'Todos'" class="col-12 form-group animated fadeIn">
                 <label for="nivel">Nivel</label>
                 <select class="form-control" required name="nivel" [(ngModel)]="unidad.IDNIVEL" (change)="filtrarUnidadesN($event.target.value)">
                   <option>Todos</option>
@@ -87,7 +91,7 @@
             </div>
         </div>
 
-        <div class="table-responsive">
+        <div *ngIf="unidades.length > 0" class="table-responsive">
             <table class="table table-striped table-hover">
                 <thead class="thead-dark">
                     <tr>
@@ -113,6 +117,12 @@
                 </tbody>
             </table>
         </div>
+
+        <div *ngIf="unidades.length < 1" class="row">
+            <div class="col-12 text-center">
+                <button class="btn btn-warning" (click)="modalClonarNivel = true">Clonar Nivel completo</button>
+            </div>
+        </div>
     </div>
 
 </div>
@@ -122,8 +132,6 @@
     <div class="col-8 offset-4 col-md-6 offset-md-6 animated slideInRight f_blanco">
 
         <h1>Datos <br>para Clonar</h1>
-
-
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <thead class="thead-dark">
@@ -146,3 +154,65 @@
             <button class="btn btn-outline-danger btn-block" (click)="clonar = !clonar">Cancelar</button>
         </div>
     </div>
+
+</div>
+
+
+<div *ngIf="modalClonarNivel" class="row fondoModif animated fadeIn clonar">
+    <div class="col-8 offset-4 col-md-6 offset-md-6 animated slideInRight f_blanco">
+
+        <div class="row">
+            <div class="col-10">
+                <h1>Datos <br>para Clonar Nivel</h1>
+            </div>
+            <div class="col-2">
+                <h5><i class="fas fa-times fa-2x" (click)="modalClonarNivel = !modalClonarNivel"></i></h5>
+            </div>
+        </div>
+
+        <div *ngIf="!loading3" class="row form-group animated fadeIn">
+            <div class="col-12">
+
+                <label for="nivel">Nivel</label>
+                <select class="form-control" required name="nivel" (change)="selectNivel($event.target.value)">
+                    <option>Escoge un nivel para clonar</option>
+                    <option *ngFor="let nivel of niveles"[value]="nivel.CODIGO" >{{nivel.NNAME | titlecase}}</option>
+                </select>
+            </div>
+
+            <div class="col-12 form-group">
+                <label for="descripcion">Agregado al nombre de la unidad.</label>
+                <input class="form-control" type="text" name="descripcion" [(ngModel)]="descripcion" required minlength="2" placeholder="se clonaran con los nombres de la unidad agregale algo para diferenciarlos">
+            </div>
+        </div>
+        
+        <div *ngIf="loading3" class="row form-group animated fadeIn">
+            <div class="col-12">
+
+                <label for="nivel">Nivel</label>
+                <select class="form-control" required name="nivel" (change)="selectNivel($event.target.value)" disabled>
+                    <option>Escoge un nivel para clonar</option>
+                    <option *ngFor="let nivel of niveles"[value]="nivel.CODIGO" >{{nivel.NNAME | titlecase}}</option>
+                </select>
+            </div>
+
+        
+        </div>
+
+       
+       
+
+        <button *ngIf="listoParaClonar === 1" class="btn btn-block btn-warning" (click)="guardarUnidades()" > Clonar </button>
+    
+        <div *ngIf="loading3" class="row">
+            <div class="col-12 text-center">
+                <p style="margin-bottom:0"><i class="fas fa-dog fa-spin fa-2x"></i></p>
+                <p>Clonando</p>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+  
